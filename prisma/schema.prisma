@@ -1,0 +1,63 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_CONNECTION_STRING")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model orders {
+  id                 String    @id(map: "orders_pkey1") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at         DateTime @default(now()) @db.Timestamptz(6)
+  status             String
+  cart               Json     @db.Json
+  transaction_id     String?
+  checkout_id        String?
+  paid               Boolean?
+  gateway            String
+  totalUniqueItems   Int
+  totalAmount        Int
+  customerId         String @db.Uuid
+  customer           customers? @relation(fields: [customerId], references: [id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model products {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  name        String
+  permalink   String
+  summary     String
+  description String
+  price       Decimal  @db.Decimal
+  images      Json     @db.Json
+  currency    String
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model customers {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  email      String
+  phone      String
+  firstName  String
+  lastName   String
+  address1   String
+  suburb     String
+  state      String
+  postcode   String
+  country    String
+  orders     orders[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  name       String
+  email      String
+  enabled    Boolean
+}
