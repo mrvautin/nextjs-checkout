@@ -1,6 +1,12 @@
 # nextjs-checkout
 
-A shopping cart built with [Next.js](https://nextjs.org/). Supports [Stripe](https://stripe.com/) and [Verifone](https://verifone.cloud/) payment gateways and supports the addition of payment gateways easily.
+A superfast shopping cart built with [Next.js](https://nextjs.org/) and [Prisma](https://www.prisma.io). Supports [Stripe](https://stripe.com/) and [Verifone](https://verifone.cloud/) payment gateways + the addition of payment gateways using modular design.
+
+![nextjs-checkout screenshot](https://nextjs-checkout-sable.vercel.app/screenshot.jpg)
+
+## Demo
+
+You can see a working demo here: [https://nextjs-checkout-sable.vercel.app/](https://nextjs-checkout-sable.vercel.app/)
 
 ## Development
 
@@ -26,7 +32,7 @@ Run command: `yarn run lint`
 
 ## Config
 
-`nextjs-checkout` uses Next.js](https://nextjs.org/) config which uses `.env` files.
+`nextjs-checkout` uses [Next.js](https://nextjs.org/) config which uses `.env` files.
 
 This means you able able to use multiple config files for your different environments. `.env` as base then `.env.development` and `.env.production`. For secrets, you can store them in `.env.local`.
 
