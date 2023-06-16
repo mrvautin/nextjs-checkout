@@ -2,11 +2,11 @@
 
 A superfast shopping cart built with [Next.js](https://nextjs.org/) and [Prisma](https://www.prisma.io). Supports [Stripe](https://stripe.com/) and [Verifone](https://verifone.cloud/) payment gateways + the addition of payment gateways using modular design.
 
-![nextjs-checkout screenshot](https://nextjs-checkout-sable.vercel.app/screenshot.jpg)
+![nextjs-checkout screenshot](https://nextjs-checkout.markmoffat.com/screenshot.jpg)
 
 ## Demo
 
-You can see a working demo here: [https://nextjs-checkout-sable.vercel.app/](https://nextjs-checkout-sable.vercel.app/)
+You can see a working demo here: [https://nextjs-checkout.markmoffat.com](https://nextjs-checkout.markmoffat.com)
 
 ## Development
 
