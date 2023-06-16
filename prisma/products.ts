@@ -26,7 +26,6 @@ const products = [
                 attribution: 'Scout Backpack',
             },
         ],
-        currency: 'AUD',
     },
     {
         name: 'Red Wing Iron Ranger Boot',
@@ -54,7 +53,6 @@ const products = [
                 attribution: 'Red Wing Iron Ranger Boot',
             },
         ],
-        currency: 'AUD',
     },
     {
         name: '5 panel camp hat',
@@ -77,7 +75,6 @@ const products = [
                 attribution: '5 panel camp hat',
             },
         ],
-        currency: 'AUD',
     },
     {
         name: 'Harriet Chambray Shirt',
@@ -108,7 +105,6 @@ const products = [
                 attribution: 'Harriet Chambray Shirt',
             },
         ],
-        currency: 'AUD',
     },
     {
         name: 'Hudderton Backpack',
@@ -135,7 +131,6 @@ const products = [
                 attribution: 'Hudderton Backpack',
             },
         ],
-        currency: 'AUD',
     },
     {
         name: 'Whitney Pullover',
@@ -165,7 +160,6 @@ const products = [
                 attribution: 'Whitney Pullover',
             },
         ],
-        currency: 'AUD',
     },
 ];
 

@@ -16,7 +16,6 @@ async function main() {
                 description: product.description,
                 price: product.price,
                 images: product.images,
-                currency: product.currency,
             },
         });
     }
