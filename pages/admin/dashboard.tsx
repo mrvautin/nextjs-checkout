@@ -1,8 +1,11 @@
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
+import { Col, Row } from 'react-bootstrap';
 import Layout from '../../components/Layout';
 import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
+import OrdersChart from '../../components/OrdersChart';
+import CustomersChart from '../../components/CustomersChart';
 import Spinner from '../../components/Spinner';
 
 const DashboardPage: NextPage = () => {
@@ -22,6 +25,14 @@ const DashboardPage: NextPage = () => {
             <Cart>
                 <NavAdmin />
                 <h2>Dashboard</h2>
+                <Row>
+                    <Col sm={6} xs={12}>
+                        <OrdersChart />
+                    </Col>
+                    <Col sm={6} xs={12}>
+                        <CustomersChart />
+                    </Col>
+                </Row>
             </Cart>
         </Layout>
     );
