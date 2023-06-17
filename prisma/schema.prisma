@@ -10,7 +10,7 @@ datasource db {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model orders {
-  id                 String    @id(map: "orders_pkey1") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                 String   @id(map: "orders_pkey1") @default(uuid())
   created_at         DateTime @default(now()) @db.Timestamptz(6)
   status             String
   cart               Json     @db.Json
@@ -20,13 +20,13 @@ model orders {
   gateway            String
   totalUniqueItems   Int
   totalAmount        Int
-  customerId         String @db.Uuid
+  customerId         String @default(uuid())
   customer           customers? @relation(fields: [customerId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model products {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id @default(uuid())
   created_at  DateTime? @default(now()) @db.Timestamptz(6)
   name        String
   permalink   String
@@ -34,11 +34,12 @@ model products {
   description String
   price       Decimal  @db.Decimal
   images      Json     @db.Json
+  enabled     Boolean
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model customers {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id         String   @id @default(uuid())
   created_at DateTime @default(now()) @db.Timestamptz(6)
   email      String
   phone      String
@@ -54,7 +55,7 @@ model customers {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model users {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id         String   @id @default(uuid())
   created_at DateTime @default(now()) @db.Timestamptz(6)
   name       String
   email      String

@@ -1,4 +1,4 @@
-import products from './products';
+import { products } from './products';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
@@ -16,6 +16,7 @@ async function main() {
                 description: product.description,
                 price: product.price,
                 images: product.images,
+                enabled: product.enabled,
             },
         });
     }

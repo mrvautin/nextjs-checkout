@@ -1,16 +1,30 @@
 {
-  "private": true,
+  "name": "nextjs-checkout",
+  "version": "1.0.0",
+  "description": "A superfast and full featured shopping cart built with Next.js and Prisma ORM.",
   "scripts": {
     "dev": "next",
     "turbo": "turbo build",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "db": "npx prisma migrate dev --name init",
     "test": "next build && npx playwright test"
   },
   "prisma": {
-    "seed": "npx ts-node prisma/seed.ts"
+    "seed": "npx ts-node prisma/seed.mjs"
   },
+  "keywords": [
+    "cart",
+    "shopping",
+    "website",
+    "stripe",
+    "verifone",
+    "nextjs",
+    "react",
+    "typescript",
+    "shopping cart"
+  ],
   "packageManager": "yarn@1.22.19",
   "dependencies": {
     "@prisma/client": "4.13.0",
@@ -21,12 +35,15 @@
     "micro-cors": "^0.1.1",
     "next": "^13.2.4",
     "next-auth": "^4.22.1",
+    "quill": "^1.3.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-bootstrap-icons": "^1.10.2",
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-number-format": "^5.2.2",
+    "react-quilljs": "^1.3.3",
     "react-responsive-carousel": "^3.2.23",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
