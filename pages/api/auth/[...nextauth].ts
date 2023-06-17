@@ -21,6 +21,22 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
         async signIn({ user }) {
+            // Check how many current users
+            const userCount = await prisma.users.count();
+
+            // If not users, create first user
+            if (userCount === 0) {
+                await prisma.users.create({
+                    data: {
+                        name: user.name,
+                        email: user.email,
+                        enabled: true,
+                    },
+                });
+                return true;
+            }
+
+            // Check user account
             const userAccount = await prisma.users.findFirst({
                 where: {
                     email: user.email,
