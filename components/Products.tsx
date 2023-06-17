@@ -25,7 +25,7 @@ const Products = () => {
     function getProducts() {
         // fetch
         fetch('/api/products', {
-            method: 'POST',
+            method: 'GET',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
