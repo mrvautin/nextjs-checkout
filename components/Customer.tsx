@@ -13,7 +13,7 @@ const Customer = props => {
     const [customer, setCustomer] = useState(props.data);
     // Return error if we don't have a customer
     if (props.data && Object.keys(props.data).length === 0) {
-        return <Error statusCode={404} />;
+        return <Error statusCode={404} withDarkMode={false} />;
     }
 
     const saveCustomerButton = (

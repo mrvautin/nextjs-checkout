@@ -9,7 +9,7 @@ import { currency } from '../lib/helpers';
 const OrderForm = props => {
     const order = props.order;
     if (!order) {
-        return <Error statusCode={404} />;
+        return <Error statusCode={404} withDarkMode={false} />;
     }
 
     const cart = order.cart;

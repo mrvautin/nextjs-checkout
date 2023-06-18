@@ -70,7 +70,7 @@ const OrdersChart = () => {
 
     // Return error if we don't have a product
     if (data && Object.keys(data).length === 0) {
-        return <Error statusCode={404} />;
+        return <Error statusCode={404} withDarkMode={false} />;
     }
 
     // Format the chart data

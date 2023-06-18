@@ -58,7 +58,7 @@ const Product = () => {
 
     // Return error if we don't have a product
     if (product && Object.keys(product).length === 0) {
-        return <Error statusCode={404} />;
+        return <Error statusCode={404} withDarkMode={false} />;
     }
 
     return (
