@@ -9,7 +9,7 @@ import OrderForm from './OrderForm';
 const Order = props => {
     // Return error if we don't have a product
     if (props.order && Object.keys(props.order).length === 0) {
-        return <Error statusCode={404} />;
+        return <Error statusCode={404} withDarkMode={false} />;
     }
 
     return (
