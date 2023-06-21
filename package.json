@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "db": "npx prisma migrate dev --name init",
+    "seed": "npx ts-node prisma/seed.mjs",
     "test": "next build && npx playwright test"
   },
   "prisma": {
