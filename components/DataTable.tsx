@@ -2,6 +2,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { format } from 'date-fns';
+import { currency } from '../lib/helpers';
 
 function lookupValue(object, key) {
     return key.split('.').reduce((o, i) => o[i], object);
@@ -16,6 +17,15 @@ const DataTable = props => {
         const value = lookupValue(item, column.name);
         if (column.format && column.format === 'date') {
             return format(new Date(value), 'dd/MM/yyyy KK:mmaaa');
+        }
+        if (column.format && column.format === 'amount') {
+            return currency(value / 100);
+        }
+        if (column.format && column.format === 'enabled') {
+            if (value === true) {
+                return <span className="text-success">Enabled</span>;
+            }
+            return <span className="text-danger">Disabled</span>;
         }
         if (column.link) {
             return <a href={column.link + value}>{value}</a>;

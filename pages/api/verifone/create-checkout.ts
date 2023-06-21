@@ -47,7 +47,7 @@ export default async function handler(
                 quantity: item.quantity,
                 unit_price: item.price,
                 total_amount: item.itemTotal,
-                image_url: `${baseUrl}${item.images[0].src}`,
+                image_url: `${baseUrl}${item.images[0].url}`,
             });
         }
         checkoutPayload.line_items = line_items;

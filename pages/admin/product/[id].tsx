@@ -5,36 +5,36 @@ import { useRouter } from 'next/router';
 import Layout from '../../../components/Layout';
 import Cart from '../../../components/Cart';
 import NavAdmin from '../../../components/NavAdmin';
-import Customer from '../../../components/Customer';
+import Product from '../../../components/ProductAdmin';
 import Spinner from '../../../components/Spinner';
 
-const CustomerPage: NextPage = () => {
+const ProductPage: NextPage = () => {
     const router = useRouter();
-    const [customerData, setCustomerData] = useState(false);
+    const [product, setProduct] = useState(false);
     useEffect(() => {
         if (!router.isReady) {
             return;
         }
-        const customerId = router.query.id;
-        getCustomer(customerId);
+        const productId = router.query.id;
+        getProduct(productId);
     }, [router.isReady]);
 
-    function getCustomer(customerId) {
-        fetch('/api/customer', {
+    function getProduct(productId) {
+        fetch('/api/dashboard/product', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                customerId: customerId,
+                id: productId,
             }),
         })
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                setCustomerData(data);
+                setProduct(data);
             })
             .catch(function (err) {
                 console.log('Payload error:' + err);
@@ -53,20 +53,20 @@ const CustomerPage: NextPage = () => {
         return <Spinner loading={true} />;
     }
 
-    // Check for customer
-    if (!customerData) {
+    // Check for product
+    if (!product) {
         return <></>;
     }
 
     return (
-        <Layout title="nextjs-checkout | Customer">
+        <Layout title="nextjs-checkout | Product">
             <Cart>
                 <NavAdmin />
-                <h2>Customer</h2>
-                <Customer data={customerData} />
+                <h2>Product</h2>
+                <Product product={product} />
             </Cart>
         </Layout>
     );
 };
 
-export default CustomerPage;
+export default ProductPage;

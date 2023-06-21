@@ -9,7 +9,7 @@ import CheckoutSidebar from '../../components/CheckoutSidebar';
 
 const ProductPage: NextPage = () => {
     return (
-        <Layout title="Shopping Cart | Product">
+        <Layout title="nextjs-checkout | Product">
             <Cart>
                 <Navbar />
                 <Product />

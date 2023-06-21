@@ -69,10 +69,7 @@ const Product = () => {
                         <Carousel>
                             {product.images.map((image, i) => (
                                 <div key={i}>
-                                    <img
-                                        alt={image.attribution}
-                                        src={image.src}
-                                    />
+                                    <img alt={image.alt} src={image.url} />
                                 </div>
                             ))}
                         </Carousel>

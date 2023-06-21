@@ -60,9 +60,9 @@ const CartItems = (props: Props) => {
                         <Row>
                             <Col xs={4}>
                                 <img
-                                    alt={item.images[0].attribution}
+                                    alt={item.images[0].alt}
                                     className="img-fluid"
-                                    src={item.images[0].src}
+                                    src={item.images[0].url}
                                 />
                             </Col>
                             <Col xs={8}>

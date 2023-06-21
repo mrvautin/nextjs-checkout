@@ -14,18 +14,22 @@ const products = [
         price: 3000,
         images: [
             {
-                src: '/images/scout-backpack/1.jpg',
-                attribution: 'Scout Backpack',
+                url: '/images/scout-backpack/1.jpg',
+                attr: 'Scout Backpack',
+                order: 1,
             },
             {
-                src: '/images/scout-backpack/2.jpg',
-                attribution: 'Scout Backpack',
+                url: '/images/scout-backpack/2.jpg',
+                attr: 'Scout Backpack',
+                order: 2,
             },
             {
-                src: '/images/scout-backpack/3.jpg',
-                attribution: 'Scout Backpack',
+                url: '/images/scout-backpack/3.jpg',
+                attr: 'Scout Backpack',
+                order: 3,
             },
         ],
+        enabled: true,
     },
     {
         name: 'Red Wing Iron Ranger Boot',
@@ -41,18 +45,22 @@ const products = [
         price: 3500,
         images: [
             {
-                src: '/images/red-wing-iron-ranger-boot/1.jpg',
-                attribution: 'Red Wing Iron Ranger Boot',
+                url: '/images/red-wing-iron-ranger-boot/1.jpg',
+                attr: 'Red Wing Iron Ranger Boot',
+                order: 1,
             },
             {
-                src: '/images/red-wing-iron-ranger-boot/2.jpg',
-                attribution: 'Red Wing Iron Ranger Boot',
+                url: '/images/red-wing-iron-ranger-boot/2.jpg',
+                attr: 'Red Wing Iron Ranger Boot',
+                order: 2,
             },
             {
-                src: '/images/red-wing-iron-ranger-boot/3.jpg',
-                attribution: 'Red Wing Iron Ranger Boot',
+                url: '/images/red-wing-iron-ranger-boot/3.jpg',
+                attr: 'Red Wing Iron Ranger Boot',
+                order: 3,
             },
         ],
+        enabled: true,
     },
     {
         name: '5 panel camp hat',
@@ -67,14 +75,17 @@ const products = [
         price: 4000,
         images: [
             {
-                src: '/images/5-panel-camp-hat/1.jpg',
-                attribution: '5 panel camp hat',
+                url: '/images/5-panel-camp-hat/1.jpg',
+                attr: '5 panel camp hat',
+                order: 1,
             },
             {
-                src: '/images/5-panel-camp-hat/2.jpg',
-                attribution: '5 panel camp hat',
+                url: '/images/5-panel-camp-hat/2.jpg',
+                attr: '5 panel camp hat',
+                order: 2,
             },
         ],
+        enabled: true,
     },
     {
         name: 'Harriet Chambray Shirt',
@@ -89,22 +100,27 @@ const products = [
         price: 2500,
         images: [
             {
-                src: '/images/harriet-chambray-shirt/1.jpg',
-                attribution: 'Harriet Chambray Shirt',
+                url: '/images/harriet-chambray-shirt/1.jpg',
+                attr: 'Harriet Chambray Shirt',
+                order: 1,
             },
             {
-                src: '/images/harriet-chambray-shirt/2.jpg',
-                attribution: 'Harriet Chambray Shirt',
+                url: '/images/harriet-chambray-shirt/2.jpg',
+                attr: 'Harriet Chambray Shirt',
+                order: 2,
             },
             {
-                src: '/images/harriet-chambray-shirt/3.jpg',
-                attribution: 'Harriet Chambray Shirt',
+                url: '/images/harriet-chambray-shirt/3.jpg',
+                attr: 'Harriet Chambray Shirt',
+                order: 3,
             },
             {
-                src: '/images/harriet-chambray-shirt/4.jpg',
-                attribution: 'Harriet Chambray Shirt',
+                url: '/images/harriet-chambray-shirt/4.jpg',
+                attr: 'Harriet Chambray Shirt',
+                order: 4,
             },
         ],
+        enabled: true,
     },
     {
         name: 'Hudderton Backpack',
@@ -123,14 +139,17 @@ const products = [
         price: 4000,
         images: [
             {
-                src: '/images/hudderton-backpack/1.jpg',
-                attribution: 'Hudderton Backpack',
+                url: '/images/hudderton-backpack/1.jpg',
+                attr: 'Hudderton Backpack',
+                order: 1,
             },
             {
-                src: '/images/hudderton-backpack/2.jpg',
-                attribution: 'Hudderton Backpack',
+                url: '/images/hudderton-backpack/2.jpg',
+                attr: 'Hudderton Backpack',
+                order: 2,
             },
         ],
+        enabled: true,
     },
     {
         name: 'Whitney Pullover',
@@ -144,23 +163,30 @@ const products = [
         price: 2500,
         images: [
             {
-                src: '/images/whitney-pullover/1.jpg',
-                attribution: 'Whitney Pullover',
+                url: '/images/whitney-pullover/1.jpg',
+                attr: 'Whitney Pullover',
+                order: 1,
             },
             {
-                src: '/images/whitney-pullover/2.jpg',
-                attribution: 'Whitney Pullover',
+                url: '/images/whitney-pullover/2.jpg',
+                attr: 'Whitney Pullover',
+                order: 2,
             },
             {
-                src: '/images/whitney-pullover/3.jpg',
-                attribution: 'Whitney Pullover',
+                url: '/images/whitney-pullover/3.jpg',
+                attr: 'Whitney Pullover',
+                order: 3,
             },
             {
-                src: '/images/whitney-pullover/4.jpg',
-                attribution: 'Whitney Pullover',
+                url: '/images/whitney-pullover/4.jpg',
+                attr: 'Whitney Pullover',
+                order: 4,
             },
         ],
+        enabled: true,
     },
 ];
 
-export default products;
+module.exports = {
+    products,
+};

@@ -9,7 +9,7 @@ import CheckoutSidebar from '../../components/CheckoutSidebar';
 
 const SearchPage: NextPage = () => {
     return (
-        <Layout title="Shopping Cart | Search">
+        <Layout title="nextjs-checkout | Search">
             <Cart>
                 <Navbar />
                 <SearchResult />

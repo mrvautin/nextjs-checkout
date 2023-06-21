@@ -17,7 +17,7 @@ const CartPage: NextPage = () => {
     }, [router.isReady]);
 
     return (
-        <Layout title="Shopping Cart | Cart">
+        <Layout title="nextjs-checkout | Cart">
             <Cart>
                 <Navbar />
                 <h2>Checkout</h2>

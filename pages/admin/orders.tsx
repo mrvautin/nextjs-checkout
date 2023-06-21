@@ -121,7 +121,7 @@ const OrdersPage: NextPage = () => {
     ];
 
     return (
-        <Layout title="Shopping Cart | Orders">
+        <Layout title="nextjs-checkout | Orders">
             <Cart>
                 <NavAdmin />
                 <h2>Orders</h2>

@@ -60,10 +60,10 @@ const SearchResult = () => {
                     <div className="col" key={product.id}>
                         <div className="card product-card">
                             <Image
-                                alt={product.images[0].attribution}
+                                alt={product.images[0].alt}
                                 className="card-img-top"
                                 height={300}
-                                src={product.images[0].src}
+                                src={product.images[0].url}
                                 style={{
                                     width: 'auto',
                                     height: 'auto',

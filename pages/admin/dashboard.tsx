@@ -21,7 +21,7 @@ const DashboardPage: NextPage = () => {
     }
 
     return (
-        <Layout title="Shopping Cart | Dashboard">
+        <Layout title="nextjs-checkout | Dashboard">
             <Cart>
                 <NavAdmin />
                 <h2>Dashboard</h2>

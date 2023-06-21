@@ -30,6 +30,9 @@ const NavAdmin = () => {
                     <NavDropdown.Item href="/admin/dashboard">
                         Dashboard
                     </NavDropdown.Item>
+                    <NavDropdown.Item href="/admin/products">
+                        Products
+                    </NavDropdown.Item>
                     <NavDropdown.Item href="/admin/orders">
                         Orders
                     </NavDropdown.Item>
@@ -54,7 +57,7 @@ const NavAdmin = () => {
                         href="/admin/dashboard"
                     >
                         <Shop className="me-3 text-primary" size={40} />
-                        <span className="fs-4">Shopping Cart</span>
+                        <span className="fs-4">nextjs-checkout</span>
                     </Link>
                     {loggedIn()}
                 </Container>

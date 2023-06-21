@@ -43,7 +43,7 @@ const CartPage: NextPage = () => {
     }
 
     return (
-        <Layout title="Shopping Cart | Thanks">
+        <Layout title="nextjs-checkout | Thanks">
             <Cart>
                 <Navbar />
                 <Spinner loading={true} />

@@ -27,10 +27,11 @@
   ],
   "packageManager": "yarn@1.22.19",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.354.0",
     "@prisma/client": "4.13.0",
-    "axios": "^1.3.4",
     "chart.js": "^4.3.0",
     "date-fns": "^2.30.0",
+    "formidable": "^3.4.0",
     "formik": "^2.2.9",
     "micro-cors": "^0.1.1",
     "next": "^13.2.4",
@@ -42,8 +43,9 @@
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-number-format": "^5.2.2",
-    "react-quilljs": "^1.3.3",
+    "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
@@ -52,7 +54,8 @@
     "sharp": "^0.32.0",
     "stripe": "^11.17.0",
     "swr": "^2.0.0",
-    "usehooks-ts": "^2.9.1"
+    "usehooks-ts": "^2.9.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.32.3",
@@ -72,7 +75,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-validate-jsx-nesting": "^0.1.0",
     "prettier": "^2.8.7",
-    "prisma": "^4.13.0",
+    "prisma": "^4.15.0",
     "ts-dotenv": "^0.9.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.3"

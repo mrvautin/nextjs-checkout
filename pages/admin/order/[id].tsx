@@ -59,7 +59,7 @@ const OrdersPage: NextPage = () => {
     }
 
     return (
-        <Layout title="Shopping Cart | Order">
+        <Layout title="nextjs-checkout | Order">
             <Cart>
                 <NavAdmin />
                 <h2>Order</h2>

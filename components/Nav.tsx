@@ -24,7 +24,7 @@ const Nav = () => {
                         href="/"
                     >
                         <Shop className="me-3 text-primary" size={40} />
-                        <span className="fs-4">Shopping Cart</span>
+                        <span className="fs-4">nextjs-checkout</span>
                     </Link>
                     <Search className="d-none d-sm-block" />
                     <Button

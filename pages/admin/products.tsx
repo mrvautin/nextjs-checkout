@@ -16,23 +16,23 @@ import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
 
-const CustomersPage: NextPage = () => {
+const ProductsPage: NextPage = () => {
     const router = useRouter();
-    const [customers, setCustomers] = useState(false);
+    const [products, setProducts] = useState(false);
     const [searchParameter, setSearchParameter] = useState('id');
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParameterPlaceholder, setSearchParameterPlaceholder] =
-        useState('Customer ID');
+        useState('Product ID');
     useEffect(() => {
         if (!router.isReady) {
             return;
         }
 
-        getCustomers();
+        getProducts();
     }, [router.isReady]);
 
-    function getCustomers() {
-        fetch('/api/customers', {
+    function getProducts() {
+        fetch('/api/dashboard/products', {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -43,7 +43,7 @@ const CustomersPage: NextPage = () => {
                 return response.json();
             })
             .then(function (data) {
-                setCustomers(data);
+                setProducts(data);
             })
             .catch(function (err) {
                 // There was an error
@@ -51,8 +51,8 @@ const CustomersPage: NextPage = () => {
             });
     }
 
-    function searchCustomers() {
-        fetch('/api/customers/search', {
+    function searchProducts() {
+        fetch('/api/products/search', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -67,7 +67,7 @@ const CustomersPage: NextPage = () => {
                 return response.json();
             })
             .then(function (data) {
-                setCustomers(data);
+                setProducts(data);
             })
             .catch(function (err) {
                 // There was an error
@@ -87,50 +87,48 @@ const CustomersPage: NextPage = () => {
         return <Spinner loading={true} />;
     }
 
-    // Check for customers
-    if (!customers) {
+    // Check for products
+    if (!products) {
         return <></>;
     }
 
     const columns = [
         {
             name: 'id',
-            title: 'Customer ID',
-            link: '/admin/customer/',
+            title: 'Product ID',
+            link: '/admin/product/',
+        },
+        {
+            name: 'name',
+            title: 'Name',
+        },
+        {
+            name: 'price',
+            title: 'Price',
+            format: 'amount',
+        },
+        {
+            name: 'enabled',
+            title: 'Status',
+            format: 'enabled',
         },
         {
             name: 'created_at',
-            title: 'Date',
+            title: 'Created',
             format: 'date',
-        },
-        {
-            name: 'email',
-            title: 'Email',
-        },
-        {
-            name: 'firstName',
-            title: 'First Name',
-        },
-        {
-            name: 'lastName',
-            title: 'Last Name',
-        },
-        {
-            name: 'suburb',
-            title: 'Suburb',
         },
     ];
 
     return (
-        <Layout title="nextjs-checkout | Customers">
+        <Layout title="nextjs-checkout | Products">
             <Cart>
                 <NavAdmin />
-                <h2>Customers</h2>
+                <h2>Products</h2>
                 <Breadcrumb>
                     <Breadcrumb.Item href="/admin/dashboard">
                         Home
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item active>Customers</Breadcrumb.Item>
+                    <Breadcrumb.Item active>Products</Breadcrumb.Item>
                 </Breadcrumb>
                 <InputGroup className="mb-3">
                     <DropdownButton
@@ -140,28 +138,18 @@ const CustomersPage: NextPage = () => {
                         <Dropdown.Item
                             onClick={() => {
                                 setSearchParameter('id');
-                                setSearchParameterPlaceholder('Customer ID');
+                                setSearchParameterPlaceholder('Product ID');
                             }}
                         >
-                            Customer ID
+                            Product ID
                         </Dropdown.Item>
                         <Dropdown.Item
                             onClick={() => {
-                                setSearchParameter('customerEmail');
-                                setSearchParameterPlaceholder('Customer Email');
+                                setSearchParameter('productName');
+                                setSearchParameterPlaceholder('Product Email');
                             }}
                         >
-                            Customer Email
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('customerLastName');
-                                setSearchParameterPlaceholder(
-                                    'Customer Surname',
-                                );
-                            }}
-                        >
-                            Customer Surname
+                            Product name
                         </Dropdown.Item>
                     </DropdownButton>
                     <Form.Control
@@ -174,7 +162,7 @@ const CustomersPage: NextPage = () => {
                     />
                     <Button
                         onClick={() => {
-                            searchCustomers();
+                            searchProducts();
                         }}
                         variant="outline-success"
                     >
@@ -182,7 +170,7 @@ const CustomersPage: NextPage = () => {
                     </Button>
                     <Button
                         onClick={() => {
-                            getCustomers();
+                            getProducts();
                             setSearchParameter('id');
                             setSearchTerm('');
                         }}
@@ -191,10 +179,10 @@ const CustomersPage: NextPage = () => {
                         X
                     </Button>
                 </InputGroup>
-                <DataTable columns={columns} data={customers} />
+                <DataTable columns={columns} data={products} />
             </Cart>
         </Layout>
     );
 };
 
-export default CustomersPage;
+export default ProductsPage;
