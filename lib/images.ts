@@ -1,6 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { createReadStream } from 'fs';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+    DeleteObjectCommand,
+    PutObjectCommand,
+    S3Client,
+} from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 
 type FileUpload = {
@@ -56,6 +60,7 @@ export async function upload(file: FileUpload) {
         // File response
         const fileResponse = {
             url: `https://${s3Bucket}.s3.amazonaws.com/${fileName}`,
+            filename: fileName,
             error: false,
         };
 
@@ -63,6 +68,29 @@ export async function upload(file: FileUpload) {
     } catch (ex) {
         console.log('err', ex);
         return {};
+    }
+}
+
+export async function remove(imageKey) {
+    try {
+        const s3Client = new S3Client({});
+        const s3Bucket = process.env.S3_BUCKET_NAME;
+
+        // Remove the file from S3
+        const removeCommand = new DeleteObjectCommand({
+            Bucket: s3Bucket,
+            Key: imageKey,
+        });
+        await s3Client.send(removeCommand);
+
+        return {
+            message: 'Successfully deleted',
+        };
+    } catch (ex) {
+        console.log('err', ex);
+        return {
+            message: 'Unable to delete file',
+        };
     }
 }
 

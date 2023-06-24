@@ -14,17 +14,17 @@ const products = [
         price: 3000,
         images: [
             {
-                url: '/images/scout-backpack/1.jpg',
+                url: './public/images/scout-backpack/1.jpg',
                 attr: 'Scout Backpack',
                 order: 1,
             },
             {
-                url: '/images/scout-backpack/2.jpg',
+                url: './public/images/scout-backpack/2.jpg',
                 attr: 'Scout Backpack',
                 order: 2,
             },
             {
-                url: '/images/scout-backpack/3.jpg',
+                url: './public/images/scout-backpack/3.jpg',
                 attr: 'Scout Backpack',
                 order: 3,
             },
@@ -45,17 +45,17 @@ const products = [
         price: 3500,
         images: [
             {
-                url: '/images/red-wing-iron-ranger-boot/1.jpg',
+                url: './public/images/red-wing-iron-ranger-boot/1.jpg',
                 attr: 'Red Wing Iron Ranger Boot',
                 order: 1,
             },
             {
-                url: '/images/red-wing-iron-ranger-boot/2.jpg',
+                url: './public/images/red-wing-iron-ranger-boot/2.jpg',
                 attr: 'Red Wing Iron Ranger Boot',
                 order: 2,
             },
             {
-                url: '/images/red-wing-iron-ranger-boot/3.jpg',
+                url: './public/images/red-wing-iron-ranger-boot/3.jpg',
                 attr: 'Red Wing Iron Ranger Boot',
                 order: 3,
             },
@@ -75,12 +75,12 @@ const products = [
         price: 4000,
         images: [
             {
-                url: '/images/5-panel-camp-hat/1.jpg',
+                url: './public/images/5-panel-camp-hat/1.jpg',
                 attr: '5 panel camp hat',
                 order: 1,
             },
             {
-                url: '/images/5-panel-camp-hat/2.jpg',
+                url: './public/images/5-panel-camp-hat/2.jpg',
                 attr: '5 panel camp hat',
                 order: 2,
             },
@@ -100,22 +100,22 @@ const products = [
         price: 2500,
         images: [
             {
-                url: '/images/harriet-chambray-shirt/1.jpg',
+                url: './public/images/harriet-chambray-shirt/1.jpg',
                 attr: 'Harriet Chambray Shirt',
                 order: 1,
             },
             {
-                url: '/images/harriet-chambray-shirt/2.jpg',
+                url: './public/images/harriet-chambray-shirt/2.jpg',
                 attr: 'Harriet Chambray Shirt',
                 order: 2,
             },
             {
-                url: '/images/harriet-chambray-shirt/3.jpg',
+                url: './public/images/harriet-chambray-shirt/3.jpg',
                 attr: 'Harriet Chambray Shirt',
                 order: 3,
             },
             {
-                url: '/images/harriet-chambray-shirt/4.jpg',
+                url: './public/images/harriet-chambray-shirt/4.jpg',
                 attr: 'Harriet Chambray Shirt',
                 order: 4,
             },
@@ -139,12 +139,12 @@ const products = [
         price: 4000,
         images: [
             {
-                url: '/images/hudderton-backpack/1.jpg',
+                url: './public/images/hudderton-backpack/1.jpg',
                 attr: 'Hudderton Backpack',
                 order: 1,
             },
             {
-                url: '/images/hudderton-backpack/2.jpg',
+                url: './public/images/hudderton-backpack/2.jpg',
                 attr: 'Hudderton Backpack',
                 order: 2,
             },
@@ -163,22 +163,22 @@ const products = [
         price: 2500,
         images: [
             {
-                url: '/images/whitney-pullover/1.jpg',
+                url: './public/images/whitney-pullover/1.jpg',
                 attr: 'Whitney Pullover',
                 order: 1,
             },
             {
-                url: '/images/whitney-pullover/2.jpg',
+                url: './public/images/whitney-pullover/2.jpg',
                 attr: 'Whitney Pullover',
                 order: 2,
             },
             {
-                url: '/images/whitney-pullover/3.jpg',
+                url: './public/images/whitney-pullover/3.jpg',
                 attr: 'Whitney Pullover',
                 order: 3,
             },
             {
-                url: '/images/whitney-pullover/4.jpg',
+                url: './public/images/whitney-pullover/4.jpg',
                 attr: 'Whitney Pullover',
                 order: 4,
             },

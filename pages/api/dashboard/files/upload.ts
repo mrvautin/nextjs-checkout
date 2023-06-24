@@ -45,6 +45,7 @@ export default async function handler(req, res) {
             data: {
                 url: response.url,
                 alt: formfields.image.originalFilename,
+                filename: response.filename,
                 order: 6,
                 productId: formfields.productId,
             },

@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import Link from 'next/link';
 import Spinner from '../components/Spinner';
 import { useCart } from 'react-use-cart';
@@ -54,7 +54,7 @@ const Products = () => {
             {products.map(product => (
                 <div className="col" key={product.id}>
                     <div className="card product-card">
-                        <Image
+                        <img
                             alt={product.images[0].alt}
                             className="card-img-top"
                             height={300}

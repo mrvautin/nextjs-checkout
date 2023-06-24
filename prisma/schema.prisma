@@ -68,6 +68,7 @@ model images {
   created_at DateTime   @default(now()) @db.Timestamptz(6)
   url        String
   alt        String
+  filename   String
   order      Int
   productId  String     @default(uuid())
   product    products?  @relation(fields: [productId], references: [id])
