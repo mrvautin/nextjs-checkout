@@ -60,7 +60,7 @@ const uploadImage = async image => {
         console.log('Uploading image...');
         const fileExt = (/[^./\\]*$/.exec(image.url) || [''])[0];
         const s3Client = new S3Client({});
-        const s3Bucket = process.env.S3_BUCKET_NAME;
+        const s3Bucket = process.env.AWS_S3_BUCKET_NAME;
         const fileUUID = uuidv4();
         const fileName = `${fileUUID}.${fileExt}`;
         const fileSize = await statSync(image.url).size;
@@ -88,7 +88,7 @@ const removeImages = async () => {
     try {
         console.log('Removing old images...');
         const s3Client = new S3Client({});
-        const s3Bucket = process.env.S3_BUCKET_NAME;
+        const s3Bucket = process.env.AWS_S3_BUCKET_NAME;
 
         // Get a file list
         const listCommand = new ListObjectsV2Command({

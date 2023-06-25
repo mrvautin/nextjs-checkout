@@ -106,3 +106,17 @@ You can test the webhook by setting up `Ngrok` and forwarding traffic to your ap
   "eventType": "CheckoutTransactionSuccess"
 }
 ```
+
+## Products
+
+### Images
+
+Product images are stored on AWS S3. You can simply setup your S3 bucket in AWS Console and add to your `.env` file. 
+
+When managing products in `/admin/products` all images will be automatically uploaded to AWS S3.
+
+``` bash
+AWS_S3_BUCKET_NAME=nextjs-checkout
+AWS_ACCESS_KEY_ID=my-key
+AWS_SECRET_ACCESS_KEY=my-key
+```
