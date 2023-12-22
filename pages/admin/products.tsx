@@ -145,8 +145,8 @@ const ProductsPage: NextPage = () => {
                         </Dropdown.Item>
                         <Dropdown.Item
                             onClick={() => {
-                                setSearchParameter('productName');
-                                setSearchParameterPlaceholder('Product Email');
+                                setSearchParameter('name');
+                                setSearchParameterPlaceholder('Product name');
                             }}
                         >
                             Product name
@@ -172,6 +172,7 @@ const ProductsPage: NextPage = () => {
                         onClick={() => {
                             getProducts();
                             setSearchParameter('id');
+                            setSearchParameterPlaceholder('Product ID');
                             setSearchTerm('');
                         }}
                         variant="outline-danger"

@@ -8,9 +8,11 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "db": "npx prisma migrate dev --name init",
+    "db": "npx prisma db push",
+    "db:test": "npx dotenv -e .env.test prisma db push",
     "seed": "npx ts-node prisma/seed.mjs",
-    "test": "next build && npx playwright test"
+    "seed:test": "npx dotenv -e .env.test ts-node prisma/seed.mjs",
+    "test": "npx dotenv -e .env.test -- jest --verbose ./__tests__/specs --runInBand"
   },
   "prisma": {
     "seed": "npx ts-node prisma/seed.mjs"
@@ -72,6 +74,9 @@
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.0.0",
     "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.2.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.7",
     "eslint": "^8.37.0",
     "eslint-config-next": "^13.2.4",
     "eslint-config-prettier": "^8.8.0",
@@ -79,8 +84,11 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-validate-jsx-nesting": "^0.1.0",
+    "jest": "^29.5.0",
+    "next-test-api-route-handler": "^3.1.8",
     "prettier": "^2.8.7",
     "prisma": "^4.15.0",
+    "supertest": "^6.3.3",
     "ts-dotenv": "^0.9.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.3"
