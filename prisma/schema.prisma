@@ -68,3 +68,20 @@ model images {
   productId  String     @default(uuid())
   product    products?  @relation(fields: [productId], references: [id])
 }
+
+model discounts {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  name       String
+  code       String
+  type       discountType @default(amount)
+  value      Decimal  @db.Decimal @default(0)
+  enabled    Boolean
+  start_at   DateTime @default(now()) @db.Timestamptz(6)
+  end_at     DateTime @default(now()) @db.Timestamptz(6)
+}
+
+enum discountType {
+  amount
+  percent
+}

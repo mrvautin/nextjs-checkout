@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_wsFx86XDJWwmE4dMskBgJYrt', {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2022-11-15',
 });
 import { updateOrder } from '../../../lib/orders';

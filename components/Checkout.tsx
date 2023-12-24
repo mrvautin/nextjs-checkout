@@ -5,10 +5,13 @@ import { Col, Row } from 'react-bootstrap';
 import CartItems from '../components/CartItems';
 import CustomerForm from '../components/CustomerForm';
 import Spinner from './Spinner';
+import { calculateCartTotal } from '../lib/helpers';
 
 const Checkout = () => {
-    const { items, cartTotal, totalUniqueItems } = useCart();
+    const { items, metadata, totalUniqueItems } = useCart();
     const [loading, setLoading] = useState(false);
+    let { cartTotal } = useCart();
+    cartTotal = calculateCartTotal(cartTotal, metadata);
 
     async function createCheckout(formData) {
         // Set the amount of the cart
@@ -17,6 +20,7 @@ const Checkout = () => {
             totalUniqueItems,
             customer: formData,
             cart: items,
+            meta: metadata,
         };
 
         // Set spinner to loading

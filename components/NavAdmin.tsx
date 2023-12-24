@@ -39,6 +39,9 @@ const NavAdmin = () => {
                     <NavDropdown.Item href="/admin/customers">
                         Customers
                     </NavDropdown.Item>
+                    <NavDropdown.Item href="/admin/discounts">
+                        Discounts
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#" onClick={() => signOut()}>
                         Logout

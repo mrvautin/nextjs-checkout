@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_wsFx86XDJWwmE4dMskBgJYrt', {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2022-11-15',
 });
 import { createOrder, updateOrder } from '../../../lib/orders';
@@ -31,6 +32,7 @@ export default async function handler(
         return;
     }
     const body = req.body;
+    console.log('body', body);
     try {
         // Build line items
         const line_items = [];
@@ -62,6 +64,28 @@ export default async function handler(
             customer: customer.id,
         })) as Order;
 
+        // Setup overly complicated Stripe discounts
+        const stripeDiscounts = [];
+        if (body.meta.discount) {
+            const discountPayload = {
+                duration: 'once',
+            } as any;
+            if (body.meta.discount.type === 'percent') {
+                discountPayload.percent_off = body.meta.discount.value;
+            }
+            if (body.meta.discount.type === 'amount') {
+                discountPayload.amount_off = body.meta.discount.value;
+                discountPayload.currency = currency;
+                discountPayload.duration = 'once';
+            }
+            // Create the once off discount
+            // eslint-disable-next-line
+            const discount = await stripe.coupons.create(discountPayload);
+            stripeDiscounts.push({
+                coupon: discount.id,
+            });
+        }
+
         // Setup Checkout request
         const session = await stripe.checkout.sessions.create({
             line_items: line_items,
@@ -70,6 +94,7 @@ export default async function handler(
             metadata: {
                 orderId: order.id,
             },
+            discounts: stripeDiscounts,
             success_url: `${baseUrl}/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${baseUrl}/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
         });
