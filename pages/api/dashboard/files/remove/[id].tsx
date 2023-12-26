@@ -36,9 +36,6 @@ export default async function handler(req, res) {
             return res.status(400).send({ message: 'Cannot locate file' });
         }
 
-        console.log('image', image);
-        console.log('req.query.id', req.query.id);
-
         // Remove image
         await remove(image.filename);
 
@@ -51,7 +48,6 @@ export default async function handler(req, res) {
 
         // Get our updated product
         const product = await getAdminProduct(image.productId);
-        console.log('product', product);
 
         // Return response
         return res.json(product);

@@ -19,7 +19,7 @@ const DiscountPage: NextPage = () => {
     }, [router.isReady]);
 
     function getDiscount(discountId) {
-        fetch('/api/dashboard/discount', {
+        fetch('/api/dashboard/discount/get', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -61,7 +61,7 @@ const DiscountPage: NextPage = () => {
         <Layout title="nextjs-checkout | Discount">
             <NavAdmin />
             <h2>Discount</h2>
-            <Discount discount={discount} />
+            <Discount discount={discount} type="edit" />
         </Layout>
     );
 };

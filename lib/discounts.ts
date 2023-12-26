@@ -52,6 +52,28 @@ export async function getAdminDiscounts() {
     }
 }
 
+export async function createDiscount(args) {
+    try {
+        // Update the discount record
+        const data = await prisma.discounts.create({
+            data: {
+                name: args.name,
+                code: args.code,
+                type: args.type,
+                value: args.value,
+                enabled: args.enabled,
+                start_at: new Date(args.start_at),
+                end_at: new Date(args.end_at),
+            },
+        });
+
+        return data;
+    } catch (ex) {
+        console.log('err', ex);
+        return {};
+    }
+}
+
 export async function updateDiscount(id, args) {
     try {
         // Update the discount record
@@ -67,8 +89,24 @@ export async function updateDiscount(id, args) {
     }
 }
 
+export async function deleteDiscount(id) {
+    try {
+        // Update the discount record
+        const data = await prisma.discounts.delete({
+            where: { id: id },
+        });
+
+        return data;
+    } catch (ex) {
+        console.log('err', ex);
+        return {};
+    }
+}
+
 export default {
     getDiscount,
     getAdminDiscounts,
+    createDiscount,
     updateDiscount,
+    deleteDiscount,
 };

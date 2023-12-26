@@ -1,4 +1,19 @@
 /* eslint-disable import/no-anonymous-default-export */
+import { schemas } from './schemas';
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
+const ajv = new Ajv();
+addFormats(ajv);
+
+ajv.addKeyword({
+    keyword: 'isNotEmpty',
+    type: 'string',
+    schemaType: 'boolean',
+    compile: () => data => {
+        return data.trim() !== '';
+    },
+});
+
 export function currency(amount) {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -24,6 +39,11 @@ export function calculateDiscount(cartTotal, cartMeta) {
         }
     }
     return cartTotal;
+}
+
+export function validateSchema(schema, data) {
+    const validate = ajv.compile(schemas[schema]);
+    return validate(data);
 }
 
 export default {

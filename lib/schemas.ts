@@ -1,0 +1,46 @@
+export const schemas = {
+    newDiscount: {
+        type: 'object',
+        properties: {
+            name: { type: 'string', isNotEmpty: true },
+            code: { type: 'string', isNotEmpty: true },
+            type: { type: 'string', enum: ['amount', 'percent'] },
+            value: { type: 'integer' },
+            enabled: { type: 'boolean' },
+            start_at: { type: 'string', format: 'date-time' },
+            end_at: { type: 'string', format: 'date-time' },
+        },
+        required: [
+            'name',
+            'code',
+            'type',
+            'value',
+            'enabled',
+            'start_at',
+            'end_at',
+        ],
+        additionalProperties: false,
+    },
+    saveDiscount: {
+        type: 'object',
+        properties: {
+            name: { type: 'string', isNotEmpty: true },
+            code: { type: 'string', isNotEmpty: true },
+            type: { type: 'string', enum: ['amount', 'percent'] },
+            value: { type: 'integer' },
+            enabled: { type: 'boolean' },
+            start_at: { type: 'string', format: 'date-time' },
+            end_at: { type: 'string', format: 'date-time' },
+        },
+        required: [
+            'name',
+            'code',
+            'type',
+            'value',
+            'enabled',
+            'start_at',
+            'end_at',
+        ],
+        additionalProperties: false,
+    },
+};

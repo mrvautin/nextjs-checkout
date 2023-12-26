@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Breadcrumb } from 'react-bootstrap';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
@@ -99,6 +100,16 @@ const DiscountsPage: NextPage = () => {
                 <Breadcrumb.Item href="/admin/dashboard">Home</Breadcrumb.Item>
                 <Breadcrumb.Item active>Discounts</Breadcrumb.Item>
             </Breadcrumb>
+            <div className="row">
+                <div className="col">
+                    <Link
+                        className="btn btn-primary"
+                        href="/admin/discount-new"
+                    >
+                        New
+                    </Link>
+                </div>
+            </div>
             <DataTable columns={columns} data={discounts} />
         </Layout>
     );

@@ -26,7 +26,6 @@ const CartItems = (props: Props) => {
 
     function checkDiscountCode() {
         setLoading(true);
-        console.log('discount', discount);
         // fetch
         fetch('/api/discounts/checkcode', {
             method: 'POST',

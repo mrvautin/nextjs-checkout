@@ -4,13 +4,30 @@
 import React from 'react';
 import Error from 'next/error';
 import { Breadcrumb, Col, Row } from 'react-bootstrap';
-import DiscountForm from './DiscountForm';
+import DiscountEdit from './DiscountEdit';
+import DiscountNew from './DiscountNew';
 
 const Discount = props => {
     // Return error if we don't have a discount
     if (props.discount && Object.keys(props.discount).length === 0) {
         return <Error statusCode={404} withDarkMode={false} />;
     }
+
+    const DiscountForm = () => {
+        if (props.type === 'edit') {
+            return <DiscountEdit discount={props.discount} />;
+        }
+        return <DiscountNew />;
+    };
+
+    const DiscountCode = () => {
+        if (props.discount && props.discount.code) {
+            return (
+                <Breadcrumb.Item active>{props.discount.code}</Breadcrumb.Item>
+            );
+        }
+        return;
+    };
 
     return (
         <Row>
@@ -22,11 +39,9 @@ const Discount = props => {
                     <Breadcrumb.Item href="/admin/discounts">
                         Discounts
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item active>
-                        {props.discount.code}
-                    </Breadcrumb.Item>
+                    {DiscountCode()}
                 </Breadcrumb>
-                <DiscountForm discount={props.discount} />
+                {DiscountForm()}
             </Col>
         </Row>
     );

@@ -2,14 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import Error from 'next/error';
+import { useRouter } from 'next/navigation';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import Spinner from './Spinner';
 import { format } from 'date-fns';
 import { NumericFormat } from 'react-number-format';
-import 'react-quill/dist/quill.snow.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const DiscountForm = props => {
+const DiscountEdit = props => {
+    const { push } = useRouter();
     const [loading, setLoading] = useState(false);
     const [discount, setDiscount] = useState(props.discount);
 
@@ -38,7 +41,11 @@ const DiscountForm = props => {
 
                 // Check for error
                 if (data.error) {
-                    alert('Payload error:' + data.error);
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                     return;
                 }
                 setDiscount(data);
@@ -52,7 +59,57 @@ const DiscountForm = props => {
             .catch(function (err) {
                 // There was an error
                 setLoading(false);
-                alert('Payload error:' + err.error);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
+            });
+    }
+
+    function deleteDiscount() {
+        setLoading(true);
+        // fetch
+        fetch('/api/dashboard/discount/delete', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(discount),
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                // Turn off the spinner
+                setLoading(false);
+
+                // Check for error
+                if (data.error) {
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
+                    return;
+                }
+
+                toast('Discount deleted', {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'success',
+                });
+                push('/admin/discounts');
+            })
+            .catch(function (err) {
+                // There was an error
+                setLoading(false);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
             });
     }
 
@@ -61,6 +118,13 @@ const DiscountForm = props => {
             <Row>
                 <Spinner loading={loading} />
                 <Col className="text-end" sm={12} xs={12}>
+                    <Button
+                        className="me-1"
+                        onClick={() => deleteDiscount()}
+                        variant="danger"
+                    >
+                        Delete
+                    </Button>
                     <Button onClick={() => saveDiscount()}>Save</Button>
                 </Col>
             </Row>
@@ -175,6 +239,47 @@ const DiscountForm = props => {
                                         <option value="false">Disabled</option>
                                     </select>
                                 </Col>
+                                <Col className="mt-3" xs={3}>
+                                    <Form.Label className="fw-bold">
+                                        Starts at
+                                    </Form.Label>
+                                    <br />
+                                    <DatePicker
+                                        className="form-control"
+                                        closeOnSelect={true}
+                                        dateFormat="dd/MM/yyyy HH:mm:ss"
+                                        input={false}
+                                        onChange={date =>
+                                            setDiscount({
+                                                ...discount,
+                                                start_at: date,
+                                            })
+                                        }
+                                        onKeyDown={e => e.preventDefault()}
+                                        selected={new Date(discount.start_at)}
+                                        showTimeSelect
+                                    />
+                                </Col>
+                                <Col className="mt-3" xs={3}>
+                                    <Form.Label className="fw-bold">
+                                        Ends at
+                                    </Form.Label>
+                                    <br />
+                                    <DatePicker
+                                        className="form-control"
+                                        closeOnSelect={true}
+                                        dateFormat="dd/MM/yyyy HH:mm:ss"
+                                        onChange={date =>
+                                            setDiscount({
+                                                ...discount,
+                                                end_at: date,
+                                            })
+                                        }
+                                        onKeyDown={e => e.preventDefault()}
+                                        selected={new Date(discount.end_at)}
+                                        showTimeSelect
+                                    />
+                                </Col>
                             </Row>
                         </Col>
                     </Row>
@@ -184,4 +289,4 @@ const DiscountForm = props => {
     );
 };
 
-export default DiscountForm;
+export default DiscountEdit;

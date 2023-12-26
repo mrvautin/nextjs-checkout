@@ -61,6 +61,10 @@
     border-bottom-right-radius: .375rem;
 }
 
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
 @media only screen and (max-width: 980px) {}
 
 @media only screen and (max-width: 600px) {}
