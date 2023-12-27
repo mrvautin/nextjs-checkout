@@ -58,7 +58,7 @@ Run the seed command: `npx prisma db seed` to seed example Products into your `p
 
 ### Stripe
 
-Configuration of Stripe payments is done via the `.env` file. The relevant values are:
+Configuration of Stripe payments is done via the `.env` or `.env.local` file. The relevant values are:
 
 ``` sh
 NEXT_PUBLIC_PAYMENT_CONFIG=stripe
@@ -70,11 +70,27 @@ STRIPE_WEBHOOK_SECRET=we_....
 
 Setup the webhook URL within the Stripe dashboard here: [https://dashboard.stripe.com/webhooks](https://dashboard.stripe.com/webhooks). 
 
-Setup the URL endpoint to `https://my-domain-url/api/verifone/webhook`.
+Setup the URL endpoint to `https://my-domain-url/api/stripe/webhook`.
+
+### Square
+
+Configuration of Square payments is done via the `.env` or `.env.local` file. The relevant values are:
+
+``` sh
+SQUARE_ACCESS_TOKEN=xxxxxx.....
+SQUARE_LOCATION_ID=xxxxxxxxxxxxx
+SQUARE_WEBHOOK_URL=http://localhost:3000/api/square/webhook
+```
+
+#### Adding the webhook
+
+Setup the Webhook URL within the Square developer dashboard here: [https://developer.squareup.com/](https://developer.squareup.com/). 
+
+Setup the URL endpoint to `https://my-domain-url/api/square/webhook`. Ensure you subscribe to `payment.updated` events. 
 
 ### Verifone
 
-Configuration of Verifone payments is done via the `.env` file. The relevant values are:
+Configuration of Verifone payments is done via the `.env` or `.env.local` file. The relevant values are:
 
 ``` sh
 NEXT_PUBLIC_PAYMENT_CONFIG=verifone
