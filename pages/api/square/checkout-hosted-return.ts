@@ -2,9 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client, Environment } from 'square';
 import { updateOrder } from '../../../lib/orders';
 
+// Set the Square env
+let SquareEnv = Environment.Sandbox;
+if (process.env.NODE_ENV === 'production') {
+    SquareEnv = Environment.Production;
+}
+
+// Setup Square client
 const client = new Client({
     accessToken: process.env.SQUARE_ACCESS_TOKEN,
-    environment: Environment.Sandbox,
+    environment: SquareEnv,
 });
 
 export default async function handler(

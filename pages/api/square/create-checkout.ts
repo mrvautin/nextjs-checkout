@@ -3,9 +3,16 @@ import { Client, Environment } from 'square';
 import { createOrder, updateOrder } from '../../../lib/orders';
 import { createCustomer } from '../../../lib/customers';
 
+// Set the Square env
+let SquareEnv = Environment.Sandbox;
+if (process.env.NODE_ENV === 'production') {
+    SquareEnv = Environment.Production;
+}
+
+// Setup Square client
 const client = new Client({
     accessToken: process.env.SQUARE_ACCESS_TOKEN,
-    environment: Environment.Sandbox,
+    environment: SquareEnv,
 });
 
 export default async function handler(
@@ -59,7 +66,7 @@ export default async function handler(
 
         checkoutPayload.order.referenceId = order.id;
         checkoutPayload.order.metadata = {
-            orderId: order.id
+            orderId: order.id,
         };
         checkoutPayload.idempotencyKey = order.id;
         checkoutPayload.prePopulatedData = {
