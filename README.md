@@ -38,6 +38,26 @@ This means you able able to use multiple config files for your different environ
 
 > Note: .env, .env.development, and .env.production files should be included in your repository as they define defaults. .env*.local should be added to .gitignore, as those files are intended to be ignored. .env.local is where secrets can be stored.
 
+#### Github authentication
+
+You will need to setup a new app in Github.
+
+1. Visit [Github apps](https://github.com/settings/apps)
+2. Click `New Github App`
+3. Enter the name of the app
+4. Enter the homepage URL of your website
+5. In the `Callback URL` enter your domain followed by `/api/auth/callback/github`. For example: `https://example.com/api/auth/callback/github`
+6. Click `Create Github App`
+
+Once complete, you will need to setup the following environment variables in your `.env`:
+
+```sh
+GITHUB_CLIENT_ID=clientid-here
+GITHUB_SECRET=secret-here
+```
+
+You can then visit `/admin` on your website which will guide you through authorising with Github.
+
 ## Database
 
 `nextjs-checkout` uses `Prisma` ORM meaning you can use a **PostgreSQL**, **MySQL**, **MongoDB**, **SQLite**, **CockroachDB**, or **Microsoft SQL Server** database. 
