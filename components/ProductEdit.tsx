@@ -3,16 +3,19 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Error from 'next/error';
+import { useRouter } from 'next/navigation';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import Spinner from '../components/Spinner';
-import ProductImages from '../components/ProductImages';
+import Spinner from './Spinner';
+import ProductImages from './ProductImages';
 import { format } from 'date-fns';
 import { NumericFormat } from 'react-number-format';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+import { removeCurrency } from '../lib/helpers';
 
-const ProductForm = props => {
+const ProductEdit = props => {
+    const { push } = useRouter();
     const [loading, setLoading] = useState(false);
     const [product, setProduct] = useState(props.product);
 
@@ -41,7 +44,11 @@ const ProductForm = props => {
 
                 // Check for error
                 if (data.error) {
-                    alert('Payload error:' + data.error);
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                     return;
                 }
                 setProduct(data);
@@ -55,7 +62,57 @@ const ProductForm = props => {
             .catch(function (err) {
                 // There was an error
                 setLoading(false);
-                alert('Payload error:' + err.error);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
+            });
+    }
+
+    function deleteProduct() {
+        setLoading(true);
+        // fetch
+        fetch('/api/dashboard/product/delete', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                // Turn off the spinner
+                setLoading(false);
+
+                // Check for error
+                if (data.error) {
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
+                    return;
+                }
+
+                toast('Product deleted', {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'success',
+                });
+                push('/admin/products');
+            })
+            .catch(function (err) {
+                // There was an error
+                setLoading(false);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
             });
     }
 
@@ -64,6 +121,13 @@ const ProductForm = props => {
             <Row>
                 <Spinner loading={loading} />
                 <Col className="text-end" sm={12} xs={12}>
+                    <Button
+                        className="me-1"
+                        onClick={() => deleteProduct()}
+                        variant="danger"
+                    >
+                        Delete
+                    </Button>
                     <Button onClick={() => saveProduct()}>Save</Button>
                 </Col>
             </Row>
@@ -152,7 +216,9 @@ const ProductForm = props => {
                                         onChange={event =>
                                             setProduct({
                                                 ...product,
-                                                price: event.target.value,
+                                                price: removeCurrency(
+                                                    event.target.value,
+                                                ),
                                             })
                                         }
                                         prefix={'$'}
@@ -211,4 +277,4 @@ const ProductForm = props => {
     );
 };
 
-export default ProductForm;
+export default ProductEdit;

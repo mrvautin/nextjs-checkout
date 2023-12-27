@@ -22,6 +22,12 @@ export function currency(amount) {
     return formatter.format(amount);
 }
 
+export function removeCurrency(price) {
+    price = price.replace('$', '');
+    price = price.replace('.', '');
+    return price;
+}
+
 export function calculateCartTotal(cartTotal, cartMeta) {
     // Calculate any discounts
     cartTotal = calculateDiscount(cartTotal, cartMeta);

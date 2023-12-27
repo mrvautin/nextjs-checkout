@@ -66,7 +66,7 @@ model images {
   filename   String
   order      Int
   productId  String     @default(uuid())
-  product    products?  @relation(fields: [productId], references: [id])
+  product    products?  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model discounts {

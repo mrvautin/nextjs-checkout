@@ -4,13 +4,30 @@
 import React from 'react';
 import Error from 'next/error';
 import { Breadcrumb, Col, Row } from 'react-bootstrap';
-import ProductForm from './ProductForm';
+import ProductEdit from './ProductEdit';
+import ProductNew from './ProductNew';
 
 const Product = props => {
     // Return error if we don't have a product
     if (props.product && Object.keys(props.product).length === 0) {
         return <Error statusCode={404} withDarkMode={false} />;
     }
+
+    const ProductForm = () => {
+        if (props.type === 'edit') {
+            return <ProductEdit product={props.product} />;
+        }
+        return <ProductNew />;
+    };
+
+    const ProductName = () => {
+        if (props.product && props.product.name) {
+            return (
+                <Breadcrumb.Item active>{props.product.name}</Breadcrumb.Item>
+            );
+        }
+        return;
+    };
 
     return (
         <Row>
@@ -22,11 +39,9 @@ const Product = props => {
                     <Breadcrumb.Item href="/admin/products">
                         Products
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item active>
-                        {props.product.name}
-                    </Breadcrumb.Item>
+                    {ProductName()}
                 </Breadcrumb>
-                <ProductForm product={props.product} />
+                {ProductForm()}
             </Col>
         </Row>
     );

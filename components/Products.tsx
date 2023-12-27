@@ -49,22 +49,31 @@ const Products = () => {
         return <Spinner loading={loading} />;
     }
 
+    const productImage = product => {
+        if (product.images && product.images.length > 0) {
+            return (
+                <img
+                    alt={product.images[0].alt}
+                    className="card-img-top"
+                    height={300}
+                    src={product.images[0].url}
+                    style={{
+                        width: 'auto',
+                        height: 'auto',
+                    }}
+                    width={300}
+                />
+            );
+        }
+        return <div style={{ height: 420 }}>&nbsp;</div>;
+    };
+
     return (
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {products.map(product => (
                 <div className="col" key={product.id}>
                     <div className="card product-card">
-                        <img
-                            alt={product.images[0].alt}
-                            className="card-img-top"
-                            height={300}
-                            src={product.images[0].url}
-                            style={{
-                                width: 'auto',
-                                height: 'auto',
-                            }}
-                            width={300}
-                        />
+                        {productImage(product)}
                         <div className="card-body">
                             <div className="card-text">
                                 <Link

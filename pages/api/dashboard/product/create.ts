@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../../api/auth/[...nextauth]';
-import { updateProduct } from '../../../../lib/products';
-import { removeCurrency } from '../../../../lib/helpers';
+import { authOptions } from '../../auth/[...nextauth]';
+import { createProduct, getProduct } from '../../../../lib/products';
 import { validateSchema } from '../../../../lib/helpers';
 
 export default async function handler(
@@ -25,28 +24,27 @@ export default async function handler(
     }
 
     const body = req.body;
-    // Fix values
-    body.price = removeCurrency(body.price);
-    delete body.images;
 
     // Validate product
-    const schemaCheck = validateSchema('saveProduct', body);
+    const schemaCheck = validateSchema('newProduct', body);
     if (schemaCheck === false) {
         return res.status(400).json({
             error: 'Please check inputs',
         });
     }
 
-    const productId = body.id;
+    // Duplicate check
+    const duplicateCheck = await getProduct(body.permalink);
+    if (duplicateCheck !== null) {
+        return res.status(400).json({
+            error: 'Product permalink already in use',
+        });
+    }
+
     try {
-        const payload = Object.assign({}, body);
-        delete payload.id;
-        await updateProduct(productId, payload);
+        await createProduct(body);
         res.status(200).json(body);
     } catch (ex) {
         console.log('err', ex);
-        res.status(400).json({
-            error: 'Cannot save product',
-        });
     }
 }

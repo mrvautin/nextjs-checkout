@@ -86,7 +86,6 @@ const ProductImages = (props: Props) => {
     };
 
     const removeImage = async imageId => {
-        console.log('imageId', imageId);
         // Start spinner
         setLoading(true);
         try {
@@ -181,7 +180,6 @@ const ProductImages = (props: Props) => {
                     setShowModal(false);
                 }}
                 onConfirm={() => {
-                    console.log('here', imageId);
                     removeImage(imageId);
                 }}
                 showmodal={showModal}

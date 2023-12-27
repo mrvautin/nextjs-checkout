@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
     Breadcrumb,
     Button,
@@ -124,13 +125,25 @@ const ProductsPage: NextPage = () => {
             <Cart>
                 <NavAdmin />
                 <h2>Products</h2>
-                <Breadcrumb>
-                    <Breadcrumb.Item href="/admin/dashboard">
-                        Home
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item active>Products</Breadcrumb.Item>
-                </Breadcrumb>
-                <InputGroup className="mb-3">
+                <div className="row">
+                    <div className="col">
+                        <Breadcrumb>
+                            <Breadcrumb.Item href="/admin/dashboard">
+                                Home
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item active>Products</Breadcrumb.Item>
+                        </Breadcrumb>
+                    </div>
+                    <div className="col">
+                        <Link
+                            className="btn btn-primary float-end"
+                            href="/admin/product-new"
+                        >
+                            New
+                        </Link>
+                    </div>
+                </div>
+                <InputGroup className="mt-2 mb-3">
                     <DropdownButton
                         title={searchParameterPlaceholder}
                         variant="outline-secondary"

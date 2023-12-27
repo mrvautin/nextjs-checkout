@@ -3,8 +3,8 @@ import prisma from '../lib/prisma';
 
 export async function getProduct(permalink) {
     try {
-        // Default to permalink
-        const dbQuery = {
+        // Select the product record
+        const data = await prisma.products.findFirst({
             where: {
                 permalink: permalink,
                 enabled: true,
@@ -16,10 +16,7 @@ export async function getProduct(permalink) {
                     },
                 },
             },
-        };
-
-        // Select the product record
-        const data = await prisma.products.findFirst(dbQuery);
+        });
 
         return data;
     } catch (ex) {
@@ -30,8 +27,8 @@ export async function getProduct(permalink) {
 
 export async function getAdminProduct(productId) {
     try {
-        // Default to permalink
-        const dbQuery = {
+        // Select the product record
+        const data = await prisma.products.findFirst({
             where: {
                 id: productId,
             },
@@ -42,10 +39,7 @@ export async function getAdminProduct(productId) {
                     },
                 },
             },
-        };
-
-        // Select the product record
-        const data = await prisma.products.findFirst(dbQuery);
+        });
 
         return data;
     } catch (ex) {
@@ -99,12 +93,55 @@ export async function getAdminProducts() {
     }
 }
 
+export async function createProduct(args) {
+    try {
+        // Update the product record
+        const data = await prisma.products.create({
+            data: {
+                name: args.name,
+                permalink: args.permalink,
+                summary: args.summary,
+                description: args.description,
+                price: args.price,
+                images: args.images,
+                enabled: args.enabled,
+            },
+        });
+
+        return data;
+    } catch (ex) {
+        console.log('err', ex);
+        return {};
+    }
+}
+
 export async function updateProduct(id, args) {
     try {
-        // Update the customers record
+        // Update the product record
         const data = await prisma.products.update({
             where: { id: id },
-            data: args,
+            data: {
+                name: args.name,
+                permalink: args.permalink,
+                summary: args.summary,
+                description: args.description,
+                price: args.price,
+                enabled: args.enabled,
+            },
+        });
+
+        return data;
+    } catch (ex) {
+        console.log('err', ex);
+        return {};
+    }
+}
+
+export async function deleteProduct(id) {
+    try {
+        // delete the product record
+        const data = await prisma.products.delete({
+            where: { id: id },
         });
 
         return data;
@@ -119,5 +156,7 @@ export default {
     getAdminProduct,
     getProducts,
     getAdminProducts,
+    createProduct,
     updateProduct,
+    deleteProduct,
 };

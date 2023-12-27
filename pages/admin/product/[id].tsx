@@ -63,7 +63,7 @@ const ProductPage: NextPage = () => {
             <Cart>
                 <NavAdmin />
                 <h2>Product</h2>
-                <Product product={product} />
+                <Product product={product} type="edit" />
             </Cart>
         </Layout>
     );
