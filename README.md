@@ -1,6 +1,6 @@
 # nextjs-checkout
 
-A superfast shopping cart built with [Next.js](https://nextjs.org/) and [Prisma](https://www.prisma.io). Supports [Stripe](https://stripe.com/) and [Verifone](https://verifone.cloud/) payment gateways + the addition of payment gateways using modular design.
+A superfast shopping cart built with [Next.js](https://nextjs.org/) and [Prisma](https://www.prisma.io). Supports [Stripe](https://stripe.com/), [Verifone](https://verifone.cloud/) and [Square (beta)](https://squareup.com/) payment gateways + the addition of payment gateways using modular design.
 
 ![nextjs-checkout screenshot](https://nextjs-checkout.markmoffat.com/screenshot.jpg)
 
@@ -37,6 +37,10 @@ Run command: `yarn run lint`
 This means you able able to use multiple config files for your different environments. `.env` as base then `.env.development` and `.env.production`. For secrets, you can store them in `.env.local`.
 
 > Note: .env, .env.development, and .env.production files should be included in your repository as they define defaults. .env*.local should be added to .gitignore, as those files are intended to be ignored. .env.local is where secrets can be stored.
+
+## Admin
+
+The admin portal is access via `/admin` (eg: `http://localhost:3000/admin`). Authentication uses [Github](https://github.com/mrvautin/nextjs-checkout?tab=readme-ov-file#github-authentication) by default but this can be extended using [NextAuth.js](https://next-auth.js.org/) setting your chosen  provider in `/pages/api/auth/[...nextauth].ts`.
 
 #### Github authentication
 
@@ -147,7 +151,7 @@ You can test the webhook by setting up `Ngrok` and forwarding traffic to your ap
 
 ### Images
 
-Product images are stored on AWS S3. You can simply setup your S3 bucket in AWS Console and add to your `.env` file. 
+Product images are stored on [AWS S3](https://aws.amazon.com/s3/). You can simply setup your S3 bucket in AWS Console and add the credentials to your `.env` or `.env.local` file. 
 
 When managing products in `/admin/products` all images will be automatically uploaded to AWS S3.
 
@@ -156,3 +160,7 @@ AWS_S3_BUCKET_NAME=nextjs-checkout
 AWS_ACCESS_KEY_ID=my-key
 AWS_SECRET_ACCESS_KEY=my-key
 ```
+
+## Discount codes
+
+Discount codes are supported using an `amount` or `percent`. You can setup discount codes using the discount page in the Admin portal `/admin/discounts`. The `Dicount code` is the value customers will use at the checkout, the `Discount value` is either an `amount` or `percent` depending on the type set. You will need to set a start and end date/time and enable your discount.
