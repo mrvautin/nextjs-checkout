@@ -96,14 +96,18 @@ const DiscountsPage: NextPage = () => {
         <Layout title="nextjs-checkout | Products">
             <NavAdmin />
             <h2>Discounts</h2>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/admin/dashboard">Home</Breadcrumb.Item>
-                <Breadcrumb.Item active>Discounts</Breadcrumb.Item>
-            </Breadcrumb>
             <div className="row">
                 <div className="col">
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/admin/dashboard">
+                            Home
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item active>Discounts</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+                <div className="col">
                     <Link
-                        className="btn btn-primary"
+                        className="btn btn-primary float-end"
                         href="/admin/discount-new"
                     >
                         New
