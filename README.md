@@ -155,6 +155,14 @@ Product images are stored on [AWS S3](https://aws.amazon.com/s3/). You can simpl
 
 When managing products in `/admin/products` all images will be automatically uploaded to AWS S3.
 
+1. Visit [AWS S3](https://aws.amazon.com/s3/)
+2. Click `Create bucket`
+3. Pick your location and name your bucket
+4. In `Object ownership` select `ACLs enabled` - This is simply used to set an ACL of `public-read` for all images making them viewable to public for your website.
+5. Uncheck `Block all public access` as we want the images viewable to the public
+6. Click `Create bucket`
+7. Enter the Access key, secret and Bucket name to your `.env` or `.env.local` file:
+
 ``` bash
 AWS_S3_BUCKET_NAME=nextjs-checkout
 AWS_ACCESS_KEY_ID=my-key
