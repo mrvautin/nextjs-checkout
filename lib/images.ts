@@ -66,8 +66,10 @@ export async function upload(file: FileUpload) {
 
         return fileResponse;
     } catch (ex) {
-        console.log('err', ex);
-        return {};
+        console.log('Error uploading file to AWS', ex);
+        return {
+            error: true,
+        };
     }
 }
 

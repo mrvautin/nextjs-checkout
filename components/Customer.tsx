@@ -51,7 +51,11 @@ const Customer = props => {
 
                 // Check for error
                 if (data.error) {
-                    alert('Payload error:' + data.error);
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                     return;
                 }
                 setCustomer(data);
@@ -65,7 +69,11 @@ const Customer = props => {
             .catch(function (err) {
                 // There was an error
                 setLoading(false);
-                alert('Payload error:' + err.error);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
             });
     }
 

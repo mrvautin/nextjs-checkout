@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useCart } from 'react-use-cart';
 import { Col, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import CartItems from '../components/CartItems';
 import CustomerForm from '../components/CustomerForm';
 import Spinner from './Spinner';
@@ -45,7 +46,11 @@ const Checkout = () => {
 
                 // Check for error
                 if (data.error) {
-                    alert('Payload error:' + data.error);
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                     return;
                 }
 
@@ -55,7 +60,11 @@ const Checkout = () => {
             .catch(function (err) {
                 // There was an error
                 setLoading(false);
-                alert('Payload error:' + err.error);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
             });
     }
 

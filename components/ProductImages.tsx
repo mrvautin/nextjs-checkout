@@ -44,7 +44,11 @@ const ProductImages = (props: Props) => {
                 .then(function (data) {
                     // Check for error
                     if (data.error) {
-                        alert('Payload error:' + data.error);
+                        toast(data.error, {
+                            hideProgressBar: false,
+                            autoClose: 2000,
+                            type: 'error',
+                        });
                         return;
                     }
 
@@ -63,7 +67,11 @@ const ProductImages = (props: Props) => {
                 .catch(function (err) {
                     // There was an error
                     setLoading(false);
-                    alert('Payload error:' + err.error);
+                    toast(err.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                 });
         } catch (error) {
             // Stop the spinner
@@ -98,7 +106,11 @@ const ProductImages = (props: Props) => {
                 .then(function (data) {
                     // Check for error
                     if (data.error) {
-                        alert('Payload error:' + data.error);
+                        toast(data.error, {
+                            hideProgressBar: false,
+                            autoClose: 2000,
+                            type: 'error',
+                        });
                         return;
                     }
 
@@ -117,7 +129,11 @@ const ProductImages = (props: Props) => {
                 .catch(function (err) {
                     // There was an error
                     setLoading(false);
-                    alert('Payload error:' + err.error);
+                    toast(err.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
                 });
         } catch (error) {
             // Stop the spinner
