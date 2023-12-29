@@ -25,7 +25,9 @@ export async function upload(file: FileUpload) {
         }
 
         const fileExt = (/[^./\\]*$/.exec(file.originalFilename) || [''])[0];
-        const s3Client = new S3Client({});
+        const s3Client = new S3Client({
+            region: process.env.AWS_REGION,
+        });
         const s3Bucket = process.env.AWS_S3_BUCKET_NAME;
         const fileUUID = uuidv4();
         const fileName = `${fileUUID}.${fileExt}`;
@@ -75,7 +77,9 @@ export async function upload(file: FileUpload) {
 
 export async function remove(imageKey) {
     try {
-        const s3Client = new S3Client({});
+        const s3Client = new S3Client({
+            region: process.env.AWS_REGION,
+        });
         const s3Bucket = process.env.AWS_S3_BUCKET_NAME;
 
         // Remove the file from S3

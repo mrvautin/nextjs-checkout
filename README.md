@@ -164,6 +164,7 @@ When managing products in `/admin/products` all images will be automatically upl
 7. Enter the Access key, secret and Bucket name to your `.env` or `.env.local` file:
 
 ``` bash
+AWS_REGION=us-east-1
 AWS_S3_BUCKET_NAME=nextjs-checkout
 AWS_ACCESS_KEY_ID=my-key
 AWS_SECRET_ACCESS_KEY=my-key
