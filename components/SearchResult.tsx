@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 import { currency } from '../lib/helpers';
 
 const SearchResult = () => {
@@ -35,6 +36,15 @@ const SearchResult = () => {
                 return response.json();
             })
             .then(function (data) {
+                if (data.error) {
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
+                    setSearchResults([]);
+                    return;
+                }
                 setSearchResults(data);
             })
             .catch(function (err) {
@@ -45,6 +55,36 @@ const SearchResult = () => {
 
     if (!searchResults) {
         return <></>;
+    }
+
+    function mainImage(images) {
+        if (images.length === 0) {
+            return (
+                <img
+                    alt={'product image'}
+                    className="card-img-top"
+                    height={300}
+                    style={{
+                        width: 'auto',
+                        height: 'auto',
+                    }}
+                    width={300}
+                />
+            );
+        }
+        return (
+            <img
+                alt={images[0].alt}
+                className="card-img-top"
+                height={300}
+                src={images[0].url}
+                style={{
+                    width: 'auto',
+                    height: 'auto',
+                }}
+                width={300}
+            />
+        );
     }
 
     return (
@@ -59,17 +99,7 @@ const SearchResult = () => {
                 {searchResults.map(product => (
                     <div className="col" key={product.id}>
                         <div className="card product-card">
-                            <img
-                                alt={product.images[0].alt}
-                                className="card-img-top"
-                                height={300}
-                                src={product.images[0].url}
-                                style={{
-                                    width: 'auto',
-                                    height: 'auto',
-                                }}
-                                width={300}
-                            />
+                            {mainImage(product.images)}
                             <div className="card-body">
                                 <div className="card-text">
                                     <Link

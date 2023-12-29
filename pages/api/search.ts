@@ -10,9 +10,14 @@ export default async function handler(
         return;
     }
     const body = req.body;
+    if (req.body.searchTerm.trim() === '') {
+        res.status(400).json({
+            error: 'Please enter a search term',
+        });
+    }
     try {
         // Search the DB
-        const searchTerm = body.searchTerm;
+        const searchTerm = body.searchTerm.replace(/[\s\n\t]/g, '_');
         const data = await prisma.products.findMany({
             where: {
                 OR: [
@@ -27,6 +32,13 @@ export default async function handler(
                         },
                     },
                 ],
+            },
+            include: {
+                images: {
+                    orderBy: {
+                        order: 'asc',
+                    },
+                },
             },
         });
         // Setup the results
