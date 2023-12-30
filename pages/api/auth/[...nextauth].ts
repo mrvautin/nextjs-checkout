@@ -1,7 +1,10 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
+import { createUser, getUserByEmail } from '../../../lib/user';
 
+/* DASHBOARD API */
 export const authOptions: NextAuthOptions = {
     providers: [
         GithubProvider({
@@ -10,14 +13,18 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        async jwt({ token, account }) {
+        async jwt({ token, user, account }) {
             // Persist the OAuth access_token to the token right after signin
             if (account) {
                 token.accessToken = account.access_token;
             }
+            user && (token.user = user);
             return token;
         },
-        async session({ session }) {
+        async session({ session, token }) {
+            if (token.user) {
+                session.user = await getUserByEmail(session.user.email);
+            }
             return session;
         },
         async signIn({ user }) {
@@ -26,12 +33,11 @@ export const authOptions: NextAuthOptions = {
 
             // If not users, create first user
             if (userCount === 0) {
-                await prisma.users.create({
-                    data: {
-                        name: user.name,
-                        email: user.email,
-                        enabled: true,
-                    },
+                await createUser({
+                    name: user.name,
+                    email: user.email,
+                    enabled: true,
+                    apiKey: uuidv4(),
                 });
                 return true;
             }

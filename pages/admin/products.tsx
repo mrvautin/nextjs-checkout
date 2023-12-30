@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {
     Breadcrumb,
@@ -16,24 +15,31 @@ import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
+import { Session } from '../../lib/types';
 
 const ProductsPage: NextPage = () => {
-    const router = useRouter();
     const [products, setProducts] = useState(false);
     const [searchParameter, setSearchParameter] = useState('id');
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParameterPlaceholder, setSearchParameterPlaceholder] =
         useState('Product ID');
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
 
-        getProducts();
-    }, [router.isReady]);
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
+    useEffect(() => {
+        if (session) {
+            getProducts();
+        }
+    }, [session]);
 
     function getProducts() {
-        fetch('/api/dashboard/products', {
+        fetch('/api/products', {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -53,7 +59,7 @@ const ProductsPage: NextPage = () => {
     }
 
     function searchProducts() {
-        fetch('/api/products/search', {
+        fetch('/api/dashboard/products/search', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -76,21 +82,9 @@ const ProductsPage: NextPage = () => {
             });
     }
 
-    // Check for user session
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.href = '/api/auth/signin';
-        },
-    });
-
-    if (status === 'loading') {
-        return <Spinner loading={true} />;
-    }
-
     // Check for products
     if (!products) {
-        return <></>;
+        return <Spinner loading={true} />;
     }
 
     const columns = [

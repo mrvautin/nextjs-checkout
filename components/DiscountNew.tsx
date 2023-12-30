@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 import Spinner from './Spinner';
 import { NumericFormat } from 'react-number-format';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Session } from '../lib/types';
 
 const DiscountNew = () => {
     const [loading, setLoading] = useState(false);
@@ -20,14 +22,24 @@ const DiscountNew = () => {
         end_at: new Date(),
     });
 
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
     function createDiscount() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/discount/create', {
+        fetch('/api/discount/create', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(discount),
         })

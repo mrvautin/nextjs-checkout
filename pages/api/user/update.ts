@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import prisma from '../../../lib/prisma';
+import { updateUser } from '../../../lib/user';
 
+/* DASHBOARD API */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
@@ -23,22 +24,11 @@ export default async function handler(
     }
 
     const body = req.body;
-    const dbEntry = {
-        name: body.name,
-        code: body.code,
-        type: body.type,
-        value: body.value,
-        enabled: body.enabled,
-        start_at: body.start_at,
-        end_at: body.end_at,
-    };
-
     try {
-        const results = await prisma.discounts.create({
-            data: dbEntry,
+        const user = await updateUser(body.id, {
+            apiKey: body.apiKey,
         });
-
-        res.status(200).json(results);
+        res.status(200).json(user);
     } catch (ex) {
         console.log('err', ex);
     }

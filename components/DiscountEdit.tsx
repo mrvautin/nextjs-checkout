@@ -10,11 +10,21 @@ import { format } from 'date-fns';
 import { NumericFormat } from 'react-number-format';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useSession } from 'next-auth/react';
+import { Session } from '../lib/types';
 
 const DiscountEdit = props => {
     const { push } = useRouter();
     const [loading, setLoading] = useState(false);
     const [discount, setDiscount] = useState(props.discount);
+
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
 
     // Check for discount
     if (!discount) {
@@ -24,11 +34,13 @@ const DiscountEdit = props => {
     function saveDiscount() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/discount/save', {
+        fetch('/api/discount/save', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(discount),
         })
@@ -70,11 +82,13 @@ const DiscountEdit = props => {
     function deleteDiscount() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/discount/delete', {
+        fetch('/api/discount/delete', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(discount),
         })

@@ -2,7 +2,7 @@
 import { schemas } from './schemas';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-const ajv = new Ajv();
+const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
 
 ajv.addKeyword({
@@ -48,8 +48,11 @@ export function calculateDiscount(cartTotal, cartMeta) {
 }
 
 export function validateSchema(schema, data) {
-    const validate = ajv.compile(schemas[schema]);
-    return validate(data);
+    const validated = ajv.validate(schemas[schema], data);
+    return {
+        valid: validated,
+        errors: ajv.errors,
+    };
 }
 
 export default {

@@ -7,17 +7,26 @@ import Cart from '../../../components/Cart';
 import NavAdmin from '../../../components/NavAdmin';
 import Customer from '../../../components/Customer';
 import Spinner from '../../../components/Spinner';
+import { Session } from '../../../lib/types';
 
 const CustomerPage: NextPage = () => {
     const router = useRouter();
     const [customerData, setCustomerData] = useState(false);
+
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
     useEffect(() => {
-        if (!router.isReady) {
-            return;
+        if (session) {
+            const customerId = router.query.id;
+            getCustomer(customerId);
         }
-        const customerId = router.query.id;
-        getCustomer(customerId);
-    }, [router.isReady]);
+    }, [session]);
 
     function getCustomer(customerId) {
         fetch('/api/customer', {
@@ -25,6 +34,8 @@ const CustomerPage: NextPage = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 customerId: customerId,
@@ -41,21 +52,9 @@ const CustomerPage: NextPage = () => {
             });
     }
 
-    // Check for user session
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.href = '/api/auth/signin';
-        },
-    });
-
-    if (status === 'loading') {
-        return <Spinner loading={true} />;
-    }
-
     // Check for customer
     if (!customerData) {
-        return <></>;
+        return <Spinner loading={true} />;
     }
 
     return (

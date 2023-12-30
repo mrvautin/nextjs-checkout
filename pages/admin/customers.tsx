@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import {
     Breadcrumb,
     Button,
@@ -15,21 +14,28 @@ import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
+import { Session } from '../../lib/types';
 
 const CustomersPage: NextPage = () => {
-    const router = useRouter();
     const [customers, setCustomers] = useState(false);
     const [searchParameter, setSearchParameter] = useState('id');
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParameterPlaceholder, setSearchParameterPlaceholder] =
         useState('Customer ID');
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
 
-        getCustomers();
-    }, [router.isReady]);
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
+    useEffect(() => {
+        if (session) {
+            getCustomers();
+        }
+    }, [session]);
 
     function getCustomers() {
         fetch('/api/customers', {
@@ -37,6 +43,8 @@ const CustomersPage: NextPage = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
         })
             .then(function (response) {
@@ -57,6 +65,8 @@ const CustomersPage: NextPage = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 searchTerm: searchTerm,

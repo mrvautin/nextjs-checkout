@@ -14,21 +14,28 @@ import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
+import { Session } from '../../lib/types';
 
 const OrdersPage: NextPage = () => {
-    const router = useRouter();
     const [orders, setOrders] = useState(false);
     const [searchParameter, setSearchParameter] = useState('id');
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParameterPlaceholder, setSearchParameterPlaceholder] =
         useState('Order ID');
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
 
-        getOrders();
-    }, [router.isReady]);
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
+    useEffect(() => {
+        if (session) {
+            getOrders();
+        }
+    }, [session]);
 
     function getOrders() {
         fetch('/api/orders', {
@@ -36,6 +43,8 @@ const OrdersPage: NextPage = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
         })
             .then(function (response) {
@@ -56,6 +65,8 @@ const OrdersPage: NextPage = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 searchTerm: searchTerm,
@@ -66,6 +77,7 @@ const OrdersPage: NextPage = () => {
                 return response.json();
             })
             .then(function (data) {
+                console.log('data', data);
                 setOrders(data);
             })
             .catch(function (err) {
@@ -74,21 +86,9 @@ const OrdersPage: NextPage = () => {
             });
     }
 
-    // Check for user session
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.href = '/api/auth/signin';
-        },
-    });
-
-    if (status === 'loading') {
-        return <Spinner loading={true} />;
-    }
-
     // Check for orders
     if (!orders) {
-        return <></>;
+        return <Spinner loading={true} />;
     }
 
     const columns = [

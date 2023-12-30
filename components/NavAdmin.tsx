@@ -5,9 +5,15 @@ import { signOut, useSession } from 'next-auth/react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
 import { MenuButtonWide } from 'react-bootstrap-icons';
 import Search from './Search';
+import { Session } from '../lib/types';
 
 const NavAdmin = () => {
-    const { data: session } = useSession();
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
 
     // Check if session is retrieved
     if (session === undefined) {
@@ -41,6 +47,9 @@ const NavAdmin = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/admin/discounts">
                         Discounts
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={'/admin/user/' + session.user.id}>
+                        User
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#" onClick={() => signOut()}>

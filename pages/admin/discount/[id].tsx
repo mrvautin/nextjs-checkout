@@ -6,24 +6,34 @@ import Layout from '../../../components/Layout';
 import NavAdmin from '../../../components/NavAdmin';
 import Discount from '../../../components/DiscountAdmin';
 import Spinner from '../../../components/Spinner';
+import { Session } from '../../../lib/types';
 
 const DiscountPage: NextPage = () => {
     const router = useRouter();
     const [discount, setDiscount] = useState(false);
     useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
         const discountId = router.query.id;
-        getDiscount(discountId);
-    }, [router.isReady]);
+        if (session) {
+            getDiscount(discountId);
+        }
+    });
+
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
 
     function getDiscount(discountId) {
-        fetch('/api/dashboard/discount/get', {
+        fetch('/api/discount/get', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 id: discountId,
@@ -40,21 +50,9 @@ const DiscountPage: NextPage = () => {
             });
     }
 
-    // Check for user session
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.href = '/api/auth/signin';
-        },
-    });
-
-    if (status === 'loading') {
-        return <Spinner loading={true} />;
-    }
-
     // Check for discount
     if (!discount) {
-        return <></>;
+        return <Spinner loading={true} />;
     }
 
     return (

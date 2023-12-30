@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]';
-import prisma from '../../../lib/prisma';
+import { authOptions } from '../../auth/[...nextauth]';
+import prisma from '../../../../lib/prisma';
 
+/* DASHBOARD API */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
@@ -17,7 +18,7 @@ export default async function handler(
     if (!session) {
         res.status(404).send({
             content:
-                "This is protected content. You can't access this content because you are signed in.",
+                "This is protected content. You can't access this content because you are not signed in.",
         });
         return;
     }

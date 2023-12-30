@@ -10,7 +10,6 @@ const testData = {
             - Full grain genuine leather accents <br/>
             - Adjustable shoulder straps <br/>
             - Lifetime Guarantee`,
-            id: 'sku_GBJ2Ep8246qeeT',
             price: 3000,
             images: [
                 {
@@ -41,7 +40,6 @@ const testData = {
             - Full leather upper <br/>
             - Stitched for long life <br/>
             `,
-            id: 'sku_GBJ2WWfMaGNC2Z',
             price: 3500,
             images: [
                 {
@@ -71,7 +69,6 @@ const testData = {
             - Made in Dayton, OH <br/>
             - 7oz Eco-Twill fabric: 35% organic cotton, 65% recycled PET (plastic water and soda bottles) <br/>
             - Embossed leather patch`,
-            id: 'sku_GBJ2WWfMaGNCsS',
             price: 4000,
             images: [
                 {
@@ -96,7 +93,6 @@ const testData = {
             - 100% Organic Cotton Chambray, 4.9 oz Fabric <br/>
             - Natural Corozo Buttons <br/>
             - Made in United By Blue's hometown of Philadelphia, USA`,
-            id: 'sku_GBJ2rWfbaGNCsS',
             price: 2500,
             images: [
                 {
@@ -135,7 +131,6 @@ const testData = {
             - Brass hardware and YKK zippers <br/>
             - Cotton Padded interior laptop sleeve <br/>
             - Lifetime Guarantee`,
-            id: 'sku_GBJ2eWfMahNCsS',
             price: 4000,
             images: [
                 {
@@ -159,7 +154,6 @@ const testData = {
             description: `Buttons are fussy. Sometimes you just want to roll out of bed, put on the pull over and get to the days work. The Whitney Pullover is super warm for the extra cold months. <br/><br/>
             - 100% Wool, Heavy 4 gauge thickness <br/>
             - Handmade in Nepal`,
-            id: 'sku_GBJ2rafqajNCsS',
             price: 2500,
             images: [
                 {
@@ -186,6 +180,61 @@ const testData = {
             enabled: true,
         },
     ],
+    users: [
+        {
+            name: 'Jimmy Test',
+            email: 'jimmytest@gmail.com',
+            enabled: true,
+        },
+    ],
+    discounts: [
+        {
+            name: 'An enabled code',
+            code: 'ENABLED_CODE',
+            type: 'amount',
+            value: 10,
+            enabled: true,
+            start_at: addDays(new Date(), -1),
+            end_at: addDays(new Date(), 5),
+        },
+        {
+            name: 'A disabled code',
+            code: 'DISABLED_CODE',
+            type: 'amount',
+            value: 10,
+            enabled: false,
+            start_at: addDays(new Date(), -1),
+            end_at: addDays(new Date(), 5),
+        },
+        {
+            name: 'An expired code',
+            code: 'EXPIRED_CODE',
+            type: 'amount',
+            value: 10,
+            enabled: true,
+            start_at: addDays(new Date(), -10),
+            end_at: addDays(new Date(), -5),
+        },
+    ],
+    customers: [
+        {
+            firstName: 'Jimmy',
+            lastName: 'Buckets',
+            email: 'jimbuckets@gmail.com',
+            phone: '0400000000',
+            address1: '1 Test Street',
+            suburb: 'Testvile',
+            state: 'NSW',
+            postcode: '2000',
+            country: 'Australia',
+        },
+    ],
 };
+
+function addDays(date, days) {
+    const newDate = new Date();
+    newDate.setDate(date.getDate() + days);
+    return newDate;
+}
 
 export default testData;

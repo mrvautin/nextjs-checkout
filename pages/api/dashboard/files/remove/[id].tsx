@@ -10,6 +10,7 @@ export const config = {
     },
 };
 
+/* DASHBOARD API */
 export default async function handler(req, res) {
     if (req.method !== 'DELETE') {
         res.status(405).send({ message: 'Only DELETE requests allowed' });
@@ -21,7 +22,7 @@ export default async function handler(req, res) {
     if (!session) {
         res.status(404).send({
             content:
-                "This is protected content. You can't access this content because you are signed in.",
+                "This is protected content. You can't access this content because you are not signed in.",
         });
         return;
     }

@@ -240,7 +240,6 @@ const ProductImages = (props: Props) => {
                                         <Button
                                             className="mt-3"
                                             onClick={() => {
-                                                // removeImage(image.id);
                                                 setImageId(image.id);
                                                 setShowModal(true);
                                             }}

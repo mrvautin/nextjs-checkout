@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../auth/[...nextauth]';
-import { deleteProduct } from '../../../../lib/products';
+import { deleteDiscount } from '../../../lib/discounts';
+import { checkApiAuth } from '../../../lib/user';
 
+/* AUTHENTICATED API */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
@@ -12,12 +12,14 @@ export default async function handler(
         return;
     }
 
-    // Check session
-    const session = await getServerSession(req, res, authOptions);
-    if (!session) {
+    // Check API
+    const authCheck = await checkApiAuth(
+        req.headers['x-user-id'],
+        req.headers['x-api-key'],
+    );
+    if (authCheck.error === true) {
         res.status(404).send({
-            content:
-                "This is protected content. You can't access this content because you are signed in.",
+            error: authCheck.message,
         });
         return;
     }
@@ -25,7 +27,7 @@ export default async function handler(
     const body = req.body;
 
     try {
-        await deleteProduct(body.id);
+        await deleteDiscount(body.id);
         res.status(200).json({});
     } catch (ex) {
         console.log('err', ex);

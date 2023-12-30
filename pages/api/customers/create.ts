@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getCustomer } from '../../lib/customers';
-import { checkApiAuth } from '../../lib/user';
+import { createCustomer } from '../../../lib/customers';
+import { checkApiAuth } from '../../../lib/user';
 
 /* AUTHENTICATED API */
 export default async function handler(
@@ -26,9 +26,7 @@ export default async function handler(
 
     const body = req.body;
     try {
-        const customerId = body.customerId;
-        const customer = await getCustomer(customerId);
-
+        const customer = await createCustomer(body);
         res.status(200).json(customer);
     } catch (ex) {
         console.log('err', ex);

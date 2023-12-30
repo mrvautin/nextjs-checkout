@@ -171,7 +171,7 @@ const CustomerForm = props => {
                     <Col sm={12}>
                         <Form onSubmit={formik.handleSubmit}>
                             <Row>
-                                <Col xs={12}>
+                                <Col xs={6}>
                                     <Form.Label>Email address</Form.Label>
                                     <input
                                         className="form-control"
@@ -186,7 +186,7 @@ const CustomerForm = props => {
                                         </div>
                                     ) : null}
                                 </Col>
-                                <Col className="mt-3" xs={12}>
+                                <Col xs={6}>
                                     <Form.Label>Phone</Form.Label>
                                     <input
                                         className="form-control"
@@ -201,10 +201,8 @@ const CustomerForm = props => {
                                         </div>
                                     ) : null}
                                 </Col>
-                                <Col className="mt-3" xs={12}>
-                                    <Form.Label>Address</Form.Label>
-                                </Col>
-                                <Col className="mb-2" xs={6}>
+                                <Col className="mt-2" xs={6}>
+                                    <Form.Label>First name</Form.Label>
                                     <input
                                         className="form-control"
                                         data-test-id="checkout-customer-firstname"
@@ -218,7 +216,8 @@ const CustomerForm = props => {
                                         </div>
                                     ) : null}
                                 </Col>
-                                <Col className="mb-2" xs={6}>
+                                <Col className="mt-2" xs={6}>
+                                    <Form.Label>Last name</Form.Label>
                                     <input
                                         className="form-control"
                                         data-test-id="checkout-customer-lastname"
@@ -231,6 +230,9 @@ const CustomerForm = props => {
                                             {formik.errors.lastName}
                                         </div>
                                     ) : null}
+                                </Col>
+                                <Col className="mt-3" xs={12}>
+                                    <Form.Label>Address</Form.Label>
                                 </Col>
                                 <Col className="mb-2" xs={12}>
                                     <input

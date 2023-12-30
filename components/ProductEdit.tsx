@@ -13,11 +13,21 @@ import { NumericFormat } from 'react-number-format';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import { removeCurrency } from '../lib/helpers';
+import { useSession } from 'next-auth/react';
+import { Session } from '../lib/types';
 
 const ProductEdit = props => {
     const { push } = useRouter();
     const [loading, setLoading] = useState(false);
     const [product, setProduct] = useState(props.product);
+
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
 
     // Check for product
     if (!product) {
@@ -27,11 +37,13 @@ const ProductEdit = props => {
     function saveProduct() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/product/save', {
+        fetch('/api/product/save', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(product),
         })
@@ -73,11 +85,13 @@ const ProductEdit = props => {
     function deleteProduct() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/product/delete', {
+        fetch('/api/product/delete', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(product),
         })

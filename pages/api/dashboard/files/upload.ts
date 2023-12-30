@@ -2,6 +2,8 @@ import { formidable } from 'formidable';
 import { getAdminProduct } from '../../../../lib/products';
 import { upload } from '../../../../lib/images';
 import prisma from '../../../../lib/prisma';
+import { authOptions } from '../../auth/[...nextauth]';
+import { getServerSession } from 'next-auth/next';
 
 export const config = {
     api: {
@@ -9,9 +11,20 @@ export const config = {
     },
 };
 
+/* DASHBOARD API */
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Only POST requests allowed' });
+        return;
+    }
+
+    // Check session
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+        res.status(404).send({
+            content:
+                "This is protected content. You can't access this content because you are not signed in.",
+        });
         return;
     }
 

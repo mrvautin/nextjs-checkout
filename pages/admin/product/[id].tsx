@@ -20,7 +20,7 @@ const ProductPage: NextPage = () => {
     }, [router.isReady]);
 
     function getProduct(productId) {
-        fetch('/api/dashboard/product', {
+        fetch('/api/product', {
             method: 'POST',
             cache: 'no-cache',
             headers: {

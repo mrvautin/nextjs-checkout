@@ -8,6 +8,8 @@ import Spinner from './Spinner';
 import { NumericFormat } from 'react-number-format';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+import { useSession } from 'next-auth/react';
+import { Session } from '../lib/types';
 
 const ProductForm = () => {
     const [loading, setLoading] = useState(false);
@@ -20,14 +22,24 @@ const ProductForm = () => {
         enabled: true,
     });
 
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
     function createProduct() {
         setLoading(true);
         // fetch
-        fetch('/api/dashboard/product/create', {
+        fetch('/api/product/create', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 name: product.name,

@@ -24,7 +24,7 @@ const Search = (props: Props) => {
 
     // Redirect to our search term
     function searchProducts() {
-        if (searchTerm === '') {
+        if (searchTerm.trim() === '') {
             window.location.href = '/';
             return;
         }
@@ -35,7 +35,6 @@ const Search = (props: Props) => {
         <div className={props.className}>
             <InputGroup className="">
                 <Form.Control
-                    aria-describedby="basic-addon2"
                     aria-label="Search..."
                     onChange={e => setSearchTerm(e.target.value)}
                     placeholder="Search products..."

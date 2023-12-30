@@ -5,12 +5,23 @@ import React, { useState } from 'react';
 import Error from 'next/error';
 import { Breadcrumb, Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 import Spinner from './Spinner';
 import CustomerForm from './CustomerForm';
+import { Session } from '../lib/types';
 
 const Customer = props => {
     const [loading, setLoading] = useState(false);
     const [customer, setCustomer] = useState(props.data);
+
+    // Check for user session
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            window.location.href = '/api/auth/signin';
+        },
+    }) as unknown as Session;
+
     // Return error if we don't have a customer
     if (props.data && Object.keys(props.data).length === 0) {
         return <Error statusCode={404} withDarkMode={false} />;
@@ -32,13 +43,14 @@ const Customer = props => {
 
         // Add the customer ID
         formData.id = customer.id;
-
         // fetch
         fetch('/api/customers/save', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify(formData),
         })

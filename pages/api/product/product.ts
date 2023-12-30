@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getProduct } from '../../lib/products';
+import { getProduct } from '../../../lib/products';
 
+/* PUBLIC API */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
