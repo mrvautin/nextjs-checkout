@@ -65,5 +65,8 @@ export default async function handler(
         });
     } catch (ex) {
         console.log('err', ex);
+        res.status(400).json({
+            error: 'Failed to get customers',
+        });
     }
 }

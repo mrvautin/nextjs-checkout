@@ -18,5 +18,8 @@ export default async function handler(
         res.status(200).json(order);
     } catch (ex) {
         console.log('err', ex);
+        res.status(400).json({
+            error: 'Failed to get order',
+        });
     }
 }

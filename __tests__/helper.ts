@@ -1,5 +1,5 @@
-import { createServer } from 'http';
 import { apiResolver } from 'next/dist/server/api-utils';
+import { createServer } from 'http';
 import testData from './testdata';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,6 +30,7 @@ export async function insertTestData() {
     await prisma.products.deleteMany({});
     await prisma.images.deleteMany({});
     await prisma.discounts.deleteMany({});
+    await prisma.customers.deleteMany({});
 
     // Loop and add our products
     for (const product of testData.products) {

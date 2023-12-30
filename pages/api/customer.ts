@@ -32,5 +32,8 @@ export default async function handler(
         res.status(200).json(customer);
     } catch (ex) {
         console.log('err', ex);
+        res.status(400).json({
+            error: 'Failed to get customer',
+        });
     }
 }
