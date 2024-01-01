@@ -1,0 +1,88 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_CONNECTION_STRING")
+}
+
+model orders {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_at         DateTime @default(now()) @db.Timestamp()
+  status             String
+  cart               Json
+  transaction_id     String?
+  checkout_id        String?
+  paid               Boolean?
+  gateway            String
+  totalUniqueItems   Int
+  totalAmount        Int
+  customerId         String @db.ObjectId
+  customer           customers? @relation(fields: [customerId], references: [id])
+}
+
+model products {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  created_at  DateTime?  @default(now()) @db.Timestamp()
+  name        String
+  permalink   String
+  summary     String
+  description String
+  price       Float
+  images      images[]
+  enabled     Boolean
+}
+
+model customers {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime    @default(now()) @db.Timestamp()
+  email      String
+  phone      String
+  firstName  String
+  lastName   String
+  address1   String
+  suburb     String
+  state      String
+  postcode   String
+  country    String
+  orders     orders[]
+}
+
+model users {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime     @default(now()) @db.Timestamp()
+  name       String
+  email      String
+  apiKey     String?      @default(uuid())
+  enabled    Boolean
+}
+
+model images {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime     @default(now()) @db.Timestamp()
+  url        String
+  alt        String
+  filename   String
+  order      Int
+  productId  String       @db.ObjectId
+  product    products?    @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model discounts {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime     @default(now()) @db.Timestamp()
+  name       String
+  code       String
+  type       discountType @default(amount)
+  value      Float
+  enabled    Boolean
+  start_at   DateTime     @default(now()) @db.Timestamp()
+  end_at     DateTime     @default(now()) @db.Timestamp()
+}
+
+enum discountType {
+  amount
+  percent
+}

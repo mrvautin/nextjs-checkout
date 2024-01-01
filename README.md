@@ -68,6 +68,8 @@ You can then visit `/admin` on your website which will guide you through authori
 
 Connecting to your database is done through the `Prisma` config file `prisma/schema.prisma`. See [here](https://www.prisma.io/docs/concepts/database-connectors) for the config options for your chosen database.
 
+You will most likely need to make small changes to the `prisma/schema.prisma` if you are not using `postgres` which is the default supported DB. Included is an example `Mongodb` file here: `prisma/schema-mongodb-example.prisma`.
+
 #### Setup / Config
 
 1. Setup DB string into the `DATABASE_CONNECTION_STRING` environment variable in your `.env` file.
