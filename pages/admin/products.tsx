@@ -39,7 +39,7 @@ const ProductsPage: NextPage = () => {
     }, [session]);
 
     function getProducts() {
-        fetch('/api/products', {
+        fetch('/api/products/admin', {
             method: 'GET',
             cache: 'no-cache',
             headers: {

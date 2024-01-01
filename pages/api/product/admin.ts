@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getProduct } from '../../../lib/products';
+import { getAdminProduct } from '../../../lib/products';
 
 /* PUBLIC API */
 export default async function handler(
@@ -12,9 +12,8 @@ export default async function handler(
     }
     const body = req.body;
     try {
-        const permalink = body.permalink;
-        const product = await getProduct(permalink);
-
+        const productId = body.id;
+        const product = await getAdminProduct(productId);
         if (!product) {
             return res.status(200).json({});
         }

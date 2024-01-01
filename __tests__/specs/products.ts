@@ -1,6 +1,6 @@
 import { testApiHandler } from 'next-test-api-route-handler';
 import getProducts from '../../pages/api/products';
-import getProduct from '../../pages/api/product/product';
+import getProduct from '../../pages/api/product';
 import createProduct from '../../pages/api/product/create';
 import type { PageConfig } from 'next';
 import { insertTestData } from '../helper';
