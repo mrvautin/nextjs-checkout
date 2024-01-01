@@ -2,7 +2,7 @@ name: nextjs-checkout-postgres
 on: push
 
 env:
-  DB_CONNECTION_STRING: postgresql://postgres:postgres@localhost:5433/nextjs-checkout
+  DB_CONNECTION_STRING: postgresql://postgres:postgres@localhost:5432/nextjs-checkout
 
 jobs:
   postgres-job:
