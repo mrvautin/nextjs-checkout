@@ -1,0 +1,57 @@
+name: nextjs-checkout-postgres
+on: push
+
+env:
+  DB_CONNECTION_STRING: postgresql://postgres:postgres@localhost:5433/nextjs-checkout
+
+jobs:
+  postgres-job:
+    strategy:
+      matrix:
+        node-version: ['18.x', '20.x']
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nextjs-checkout
+          PGUSER: postgres
+          PGPORT: 5432
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Install openssl for Prisma
+        run: apt-get update -y && apt-get install -y openssl
+      # Downloads a copy of the code in your repository before running CI tests
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn install
+
+      # Build App
+      - name: Build nextjs
+        run: yarn build
+
+      # Setup the DB
+      - name: Setup test DB
+        run: npx dotenv -e .env.test prisma db push
+        env:
+          DATABASE_CONNECTION_STRING: $DB_CONNECTION_STRING
+
+      # Run tests
+      - name: Run tests
+        run: yarn test
+        env:
+          DATABASE_CONNECTION_STRING: $DB_CONNECTION_STRING
