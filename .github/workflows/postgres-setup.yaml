@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Install openssl for Prisma
-        run: apt-get update -y && apt-get install -y openssl
+        run: sudo apt-get update -y && sudo apt-get install -y openssl
       # Downloads a copy of the code in your repository before running CI tests
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
