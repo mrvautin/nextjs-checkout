@@ -61,18 +61,33 @@ const Product = () => {
         return <Error statusCode={404} withDarkMode={false} />;
     }
 
+    const productImage = images => {
+        if (images && images.length > 0) {
+            return (
+                <Carousel>
+                    {images.map((image, i) => (
+                        <div key={i}>
+                            <img alt={image.alt} src={image.url} />
+                        </div>
+                    ))}
+                </Carousel>
+            );
+        }
+        return (
+            <img
+                alt={'Product placeholder image'}
+                className="img-fluid"
+                src={'/placeholder.png'}
+            />
+        );
+    };
+
     return (
         <Row>
             <Col className="mb-3" sm={6} xs={12}>
                 <Row>
                     <Col className="mb-3" sm={12}>
-                        <Carousel>
-                            {product.images.map((image, i) => (
-                                <div key={i}>
-                                    <img alt={image.alt} src={image.url} />
-                                </div>
-                            ))}
-                        </Carousel>
+                        {productImage(product.images)}
                     </Col>
                 </Row>
             </Col>

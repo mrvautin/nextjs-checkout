@@ -65,7 +65,13 @@ const Products = () => {
                 />
             );
         }
-        return <div style={{ height: 300 }}>&nbsp;</div>;
+        return (
+            <img
+                alt={'Product placeholder image'}
+                className="img-fluid"
+                src={'/placeholder.png'}
+            />
+        );
     };
 
     return (

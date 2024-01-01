@@ -128,7 +128,13 @@ const CartItems = (props: Props) => {
                 />
             );
         }
-        return <div>&nbsp;</div>;
+        return (
+            <img
+                alt={'Product placeholder image'}
+                className="img-fluid"
+                src={'/placeholder.png'}
+            />
+        );
     };
 
     return (
