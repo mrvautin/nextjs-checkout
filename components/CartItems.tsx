@@ -118,6 +118,19 @@ const CartItems = (props: Props) => {
         );
     }
 
+    const productImage = item => {
+        if (item.images && item.images.length > 0) {
+            return (
+                <img
+                    alt={item.images[0].alt}
+                    className="img-fluid"
+                    src={item.images[0].url}
+                />
+            );
+        }
+        return <div>&nbsp;</div>;
+    };
+
     return (
         <>
             <Spinner loading={loading} />
@@ -129,13 +142,7 @@ const CartItems = (props: Props) => {
                         key={item.id}
                     >
                         <Row>
-                            <Col xs={4}>
-                                <img
-                                    alt={item.images[0].alt}
-                                    className="img-fluid"
-                                    src={item.images[0].url}
-                                />
-                            </Col>
+                            <Col xs={4}>{productImage(item)}</Col>
                             <Col xs={8}>
                                 <Row>
                                     <Col xs={6}>

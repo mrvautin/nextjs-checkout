@@ -65,7 +65,7 @@ const Products = () => {
                 />
             );
         }
-        return <div style={{ height: 420 }}>&nbsp;</div>;
+        return <div style={{ height: 300 }}>&nbsp;</div>;
     };
 
     return (

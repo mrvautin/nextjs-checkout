@@ -11,8 +11,6 @@ import { toast } from 'react-toastify';
 import { currency } from '../lib/helpers';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import { useSession } from 'next-auth/react';
-import { Session } from '../lib/types';
 
 const Product = () => {
     const router = useRouter();
@@ -28,14 +26,6 @@ const Product = () => {
         getProduct(productPermalink);
     }, [router.isReady]);
 
-    // Check for user session
-    const { data: session } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.href = '/api/auth/signin';
-        },
-    }) as unknown as Session;
-
     function getProduct(permalink) {
         // fetch
         fetch('/api/product', {
@@ -43,8 +33,6 @@ const Product = () => {
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
-                'x-user-id': session.user.id,
-                'x-api-key': session.user.apiKey,
             },
             body: JSON.stringify({
                 permalink: permalink,

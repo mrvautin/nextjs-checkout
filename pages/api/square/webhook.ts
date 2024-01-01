@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Client, Environment, WebhooksHelper } from 'square';
+import { Client, Environment } from 'square';
 import { updateOrder } from '../../../lib/orders';
 
 const client = new Client({
