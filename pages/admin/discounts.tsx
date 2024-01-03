@@ -114,7 +114,11 @@ const DiscountsPage: NextPage = () => {
                     </Link>
                 </div>
             </div>
-            <DataTable columns={columns} data={discounts} />
+            <DataTable
+                columns={columns}
+                data={discounts}
+                datamessage={'No results'}
+            />
         </Layout>
     );
 };

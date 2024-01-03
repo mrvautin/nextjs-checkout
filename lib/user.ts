@@ -21,7 +21,6 @@ export async function updateUser(id, args) {
             where: { id: id },
             data: args,
         });
-        console.log('data', data);
         return data;
     } catch (ex) {
         console.log('err', ex);

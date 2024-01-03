@@ -187,7 +187,11 @@ const ProductsPage: NextPage = () => {
                         X
                     </Button>
                 </InputGroup>
-                <DataTable columns={columns} data={products} />
+                <DataTable
+                    columns={columns}
+                    data={products}
+                    datamessage={'No results'}
+                />
             </Cart>
         </Layout>
     );

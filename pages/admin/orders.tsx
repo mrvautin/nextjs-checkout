@@ -76,7 +76,6 @@ const OrdersPage: NextPage = () => {
                 return response.json();
             })
             .then(function (data) {
-                console.log('data', data);
                 setOrders(data);
             })
             .catch(function (err) {
@@ -191,7 +190,11 @@ const OrdersPage: NextPage = () => {
                         X
                     </Button>
                 </InputGroup>
-                <DataTable columns={columns} data={orders} />
+                <DataTable
+                    columns={columns}
+                    data={orders}
+                    datamessage={'No results'}
+                />
             </Cart>
         </Layout>
     );

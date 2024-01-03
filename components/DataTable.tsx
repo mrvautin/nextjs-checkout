@@ -10,7 +10,7 @@ function lookupValue(object, key) {
 
 const DataTable = props => {
     if (props.data.length === 0) {
-        return <h1>No results</h1>;
+        return <h3>{props.datamessage || 'No results'}</h3>;
     }
 
     function printProperty(item, column) {

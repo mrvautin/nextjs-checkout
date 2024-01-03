@@ -32,7 +32,6 @@ export default async function handler(
         return;
     }
     const body = req.body;
-    console.log('body', body);
     try {
         // Build line items
         const line_items = [];
