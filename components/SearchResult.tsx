@@ -61,14 +61,9 @@ const SearchResult = () => {
         if (images.length === 0) {
             return (
                 <img
-                    alt={'product image'}
-                    className="card-img-top"
-                    height={300}
-                    style={{
-                        width: 'auto',
-                        height: 'auto',
-                    }}
-                    width={300}
+                    alt={'Product placeholder image'}
+                    className="img-fluid"
+                    src={'/placeholder.png'}
                 />
             );
         }

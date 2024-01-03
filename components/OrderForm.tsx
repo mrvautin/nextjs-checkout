@@ -14,6 +14,26 @@ const OrderForm = props => {
 
     const cart = order.cart;
 
+    // Check for product image and toggle placeholder
+    const productImage = item => {
+        if (item.images && item.images.length > 0) {
+            return (
+                <img
+                    alt={item.images[0].alt}
+                    className="img-fluid"
+                    src={item.images[0].url}
+                />
+            );
+        }
+        return (
+            <img
+                alt={'Product placeholder image'}
+                className="img-fluid"
+                src={'/placeholder.png'}
+            />
+        );
+    };
+
     return (
         <Row>
             <Col className="g-3" sm={7} xs={12}>
@@ -99,13 +119,7 @@ const OrderForm = props => {
                             key={item.id}
                         >
                             <Row>
-                                <Col xs={4}>
-                                    <img
-                                        alt={item.images[0].alt}
-                                        className="img-fluid"
-                                        src={item.images[0].url}
-                                    />
-                                </Col>
+                                <Col xs={4}>{productImage(item)}</Col>
                                 <Col xs={8}>
                                     <Row>
                                         <Col xs={6}>
