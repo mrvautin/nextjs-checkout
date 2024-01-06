@@ -134,10 +134,10 @@ const Product = () => {
                     return item.trim();
                 });
                 variantElements.push(
-                    <div key={variant.id}>
+                    <div data-test-id={variant.id} key={variant.id}>
                         <h5 className="mb-2 text-muted">{variant.title}:</h5>
                         <Form.Select
-                            className="mb-4"
+                            className="mb-4 productVariant"
                             onChange={event =>
                                 variantSelect(variant, event.target.value)
                             }

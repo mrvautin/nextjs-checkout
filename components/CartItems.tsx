@@ -98,6 +98,7 @@ const CartItems = (props: Props) => {
         return (
             <InputGroup className="mb-3">
                 <Button
+                    className="itemReduceQuantity"
                     onClick={() => updateItemQuantity(item, 'reduce', 1)}
                     variant="dark"
                 >
@@ -105,11 +106,12 @@ const CartItems = (props: Props) => {
                 </Button>
                 <Form.Control
                     aria-label="Item quantity"
-                    className="text-center"
+                    className="text-center itemQuantity"
                     readOnly
                     value={item.quantity}
                 />
                 <Button
+                    className="itemIncreaseQuantity"
                     onClick={() => updateItemQuantity(item, 'add', 1)}
                     variant="dark"
                 >
@@ -233,14 +235,6 @@ const CartItems = (props: Props) => {
                                 </button>
                             </div>
                         </Col>
-                        {/* <Col className="mt-3 text-left" xs={6}>
-                            <h6>Discount savings:</h6>
-                        </Col>
-                        <Col className="mt-3 text-end" xs={6}>
-                            <h6>
-                                {currency(cartDiscountValues.cartSavings / 100)}
-                            </h6>
-                        </Col> */}
                         <Col className="mt-3 text-left" xs={6}>
                             <h6>Cart total:</h6>
                         </Col>

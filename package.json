@@ -13,7 +13,8 @@
     "db:test": "npx dotenv -e .env.test prisma db push",
     "seed": "npx ts-node prisma/seed.mjs",
     "seed:test": "npx dotenv -e .env.test ts-node prisma/seed.mjs",
-    "test": "npx dotenv -e .env.test -- jest --verbose ./__tests__/specs --runInBand"
+    "test": "npx dotenv -e .env.test -- jest --verbose ./__tests__/specs --runInBand",
+    "test:ui": "npx playwright test"
   },
   "prisma": {
     "seed": "npx ts-node prisma/seed.mjs"

@@ -70,7 +70,7 @@ const Products = () => {
         return (
             <Link
                 className="btn btn-dark"
-                data-test-id={product.name}
+                data-test-id={product.name + '-btn'}
                 href={'/product/' + product.permalink}
             >
                 View product
