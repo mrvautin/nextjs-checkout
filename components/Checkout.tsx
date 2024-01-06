@@ -1,27 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import { useCart } from 'react-use-cart';
+import React, { useContext, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import CartItems from '../components/CartItems';
+import { CartContext } from '../context/Cart';
 import CustomerForm from '../components/CustomerForm';
 import Spinner from './Spinner';
 import { calculateCartTotal } from '../lib/helpers';
 
 const Checkout = () => {
-    const { items, metadata, totalUniqueItems } = useCart();
     const [loading, setLoading] = useState(false);
-    let { cartTotal } = useCart();
-    cartTotal = calculateCartTotal(cartTotal, metadata);
+    const { cartTotal, totalUniqueItems, items } = useContext(CartContext);
+    const checkedCartTotal = calculateCartTotal(cartTotal(), {});
 
     async function createCheckout(formData) {
         // Set the amount of the cart
         const payload = {
-            totalAmount: cartTotal,
-            totalUniqueItems,
+            totalAmount: checkedCartTotal,
+            totalUniqueItems: totalUniqueItems(),
             customer: formData,
             cart: items,
-            meta: metadata,
+            meta: {},
         };
 
         // Set spinner to loading

@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import Layout from '../components/Layout';
-import Cart from '../components/Cart';
 import Navbar from '../components/Nav';
 import Spinner from '../components/Spinner';
 import { useEffect } from 'react';
@@ -44,10 +43,8 @@ const CartPage: NextPage = () => {
 
     return (
         <Layout title="nextjs-checkout | Thanks">
-            <Cart>
-                <Navbar />
-                <Spinner loading={true} />
-            </Cart>
+            <Navbar />
+            <Spinner loading={true} />
         </Layout>
     );
 };

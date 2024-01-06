@@ -11,7 +11,6 @@ import {
     InputGroup,
 } from 'react-bootstrap';
 import Layout from '../../components/Layout';
-import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
@@ -116,83 +115,81 @@ const ProductsPage: NextPage = () => {
 
     return (
         <Layout title="nextjs-checkout | Products">
-            <Cart>
-                <NavAdmin />
-                <h2>Products</h2>
-                <div className="row">
-                    <div className="col">
-                        <Breadcrumb>
-                            <Breadcrumb.Item href="/admin/dashboard">
-                                Home
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item active>Products</Breadcrumb.Item>
-                        </Breadcrumb>
-                    </div>
-                    <div className="col">
-                        <Link
-                            className="btn btn-primary float-end"
-                            href="/admin/product-new"
-                        >
-                            New
-                        </Link>
-                    </div>
+            <NavAdmin />
+            <h2>Products</h2>
+            <div className="row">
+                <div className="col">
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/admin/dashboard">
+                            Home
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item active>Products</Breadcrumb.Item>
+                    </Breadcrumb>
                 </div>
-                <InputGroup className="mt-2 mb-3">
-                    <DropdownButton
-                        title={searchParameterPlaceholder}
-                        variant="outline-secondary"
+                <div className="col">
+                    <Link
+                        className="btn btn-primary float-end"
+                        href="/admin/product-new"
                     >
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('id');
-                                setSearchParameterPlaceholder('Product ID');
-                            }}
-                        >
-                            Product ID
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('name');
-                                setSearchParameterPlaceholder('Product name');
-                            }}
-                        >
-                            Product name
-                        </Dropdown.Item>
-                    </DropdownButton>
-                    <Form.Control
-                        aria-label={searchParameterPlaceholder}
-                        onChange={event => {
-                            setSearchTerm(event.target.value);
-                        }}
-                        placeholder={searchParameterPlaceholder}
-                        value={searchTerm}
-                    />
-                    <Button
+                        New
+                    </Link>
+                </div>
+            </div>
+            <InputGroup className="mt-2 mb-3">
+                <DropdownButton
+                    title={searchParameterPlaceholder}
+                    variant="outline-secondary"
+                >
+                    <Dropdown.Item
                         onClick={() => {
-                            searchProducts();
-                        }}
-                        variant="outline-success"
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            getProducts();
                             setSearchParameter('id');
                             setSearchParameterPlaceholder('Product ID');
-                            setSearchTerm('');
                         }}
-                        variant="outline-danger"
                     >
-                        X
-                    </Button>
-                </InputGroup>
-                <DataTable
-                    columns={columns}
-                    data={products}
-                    datamessage={'No results'}
+                        Product ID
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('name');
+                            setSearchParameterPlaceholder('Product name');
+                        }}
+                    >
+                        Product name
+                    </Dropdown.Item>
+                </DropdownButton>
+                <Form.Control
+                    aria-label={searchParameterPlaceholder}
+                    onChange={event => {
+                        setSearchTerm(event.target.value);
+                    }}
+                    placeholder={searchParameterPlaceholder}
+                    value={searchTerm}
                 />
-            </Cart>
+                <Button
+                    onClick={() => {
+                        searchProducts();
+                    }}
+                    variant="outline-success"
+                >
+                    Filter
+                </Button>
+                <Button
+                    onClick={() => {
+                        getProducts();
+                        setSearchParameter('id');
+                        setSearchParameterPlaceholder('Product ID');
+                        setSearchTerm('');
+                    }}
+                    variant="outline-danger"
+                >
+                    X
+                </Button>
+            </InputGroup>
+            <DataTable
+                columns={columns}
+                data={products}
+                datamessage={'No results'}
+            />
         </Layout>
     );
 };

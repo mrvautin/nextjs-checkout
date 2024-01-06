@@ -15,6 +15,11 @@ export async function getProduct(permalink) {
                         order: 'asc',
                     },
                 },
+                variants: {
+                    orderBy: {
+                        created_at: 'asc',
+                    },
+                },
             },
         });
 
@@ -36,6 +41,11 @@ export async function getAdminProduct(productId) {
                 images: {
                     orderBy: {
                         order: 'asc',
+                    },
+                },
+                variants: {
+                    orderBy: {
+                        created_at: 'asc',
                     },
                 },
             },
@@ -62,6 +72,11 @@ export async function getProducts() {
                         order: 'asc',
                     },
                 },
+                variants: {
+                    orderBy: {
+                        created_at: 'asc',
+                    },
+                },
             },
         });
 
@@ -81,6 +96,11 @@ export async function getAdminProducts() {
                 images: {
                     orderBy: {
                         order: 'asc',
+                    },
+                },
+                variants: {
+                    orderBy: {
+                        created_at: 'asc',
                     },
                 },
             },

@@ -9,7 +9,6 @@ import {
     InputGroup,
 } from 'react-bootstrap';
 import Layout from '../../components/Layout';
-import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
@@ -120,82 +119,78 @@ const OrdersPage: NextPage = () => {
 
     return (
         <Layout title="nextjs-checkout | Orders">
-            <Cart>
-                <NavAdmin />
-                <h2>Orders</h2>
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                        title={searchParameterPlaceholder}
-                        variant="outline-secondary"
-                    >
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('id');
-                                setSearchParameterPlaceholder('Order ID');
-                            }}
-                        >
-                            Order ID
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('customerEmail');
-                                setSearchParameterPlaceholder('Customer Email');
-                            }}
-                        >
-                            Customer Email
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('customerLastName');
-                                setSearchParameterPlaceholder(
-                                    'Customer Surname',
-                                );
-                            }}
-                        >
-                            Customer Surname
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('result');
-                                setSearchParameterPlaceholder('Result');
-                            }}
-                        >
-                            Result
-                        </Dropdown.Item>
-                    </DropdownButton>
-                    <Form.Control
-                        aria-label={searchParameterPlaceholder}
-                        onChange={event => {
-                            setSearchTerm(event.target.value);
-                        }}
-                        placeholder={searchParameterPlaceholder}
-                        value={searchTerm}
-                    />
-                    <Button
+            <NavAdmin />
+            <h2>Orders</h2>
+            <InputGroup className="mb-3">
+                <DropdownButton
+                    title={searchParameterPlaceholder}
+                    variant="outline-secondary"
+                >
+                    <Dropdown.Item
                         onClick={() => {
-                            searchOrders();
-                        }}
-                        variant="outline-success"
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            getOrders();
                             setSearchParameter('id');
-                            setSearchTerm('');
+                            setSearchParameterPlaceholder('Order ID');
                         }}
-                        variant="outline-danger"
                     >
-                        X
-                    </Button>
-                </InputGroup>
-                <DataTable
-                    columns={columns}
-                    data={orders}
-                    datamessage={'No results'}
+                        Order ID
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('customerEmail');
+                            setSearchParameterPlaceholder('Customer Email');
+                        }}
+                    >
+                        Customer Email
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('customerLastName');
+                            setSearchParameterPlaceholder('Customer Surname');
+                        }}
+                    >
+                        Customer Surname
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('result');
+                            setSearchParameterPlaceholder('Result');
+                        }}
+                    >
+                        Result
+                    </Dropdown.Item>
+                </DropdownButton>
+                <Form.Control
+                    aria-label={searchParameterPlaceholder}
+                    onChange={event => {
+                        setSearchTerm(event.target.value);
+                    }}
+                    placeholder={searchParameterPlaceholder}
+                    value={searchTerm}
                 />
-            </Cart>
+                <Button
+                    onClick={() => {
+                        searchOrders();
+                    }}
+                    variant="outline-success"
+                >
+                    Filter
+                </Button>
+                <Button
+                    onClick={() => {
+                        getOrders();
+                        setSearchParameter('id');
+                        setSearchTerm('');
+                    }}
+                    variant="outline-danger"
+                >
+                    X
+                </Button>
+            </InputGroup>
+            <DataTable
+                columns={columns}
+                data={orders}
+                datamessage={'No results'}
+            />
         </Layout>
     );
 };

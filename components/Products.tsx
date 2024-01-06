@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Spinner from '../components/Spinner';
-import { useCart } from 'react-use-cart';
+import { CartContext } from '../context/Cart';
 import { toast } from 'react-toastify';
 import { currency } from '../lib/helpers';
 
 const Products = () => {
     const router = useRouter();
-    const { addItem } = useCart();
+    const { addItem } = useContext(CartContext);
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState<any>();
 
@@ -48,6 +48,35 @@ const Products = () => {
     if (!products) {
         return <Spinner loading={loading} />;
     }
+
+    const addToCart = product => {
+        if (product.variants && product.variants.length === 0) {
+            return (
+                <button
+                    className="btn btn-dark"
+                    onClick={() => {
+                        addItem(product);
+                        toast('Cart updated', {
+                            hideProgressBar: false,
+                            autoClose: 2000,
+                            type: 'success',
+                        });
+                    }}
+                >
+                    Add to cart
+                </button>
+            );
+        }
+        return (
+            <Link
+                className="btn btn-dark"
+                data-test-id={product.name}
+                href={'/product/' + product.permalink}
+            >
+                View product
+            </Link>
+        );
+    };
 
     const productImage = product => {
         if (product.images && product.images.length > 0) {
@@ -96,19 +125,7 @@ const Products = () => {
                             </div>
                             <div className="d-flex justify-content-between ">
                                 <div className="btn-group flex-fill">
-                                    <button
-                                        className="btn btn-dark"
-                                        onClick={() => {
-                                            addItem(product);
-                                            toast('Cart updated', {
-                                                hideProgressBar: false,
-                                                autoClose: 2000,
-                                                type: 'success',
-                                            });
-                                        }}
-                                    >
-                                        Add to cart
-                                    </button>
+                                    {addToCart(product)}
                                 </div>
                             </div>
                         </div>

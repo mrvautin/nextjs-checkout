@@ -24,11 +24,13 @@ export async function insertTestData() {
         discounts: [],
         users: [],
         customers: [],
+        variants: [],
     };
 
     // Remove existing
-    await prisma.products.deleteMany({});
+    await prisma.variants.deleteMany({});
     await prisma.images.deleteMany({});
+    await prisma.products.deleteMany({});
     await prisma.discounts.deleteMany({});
     await prisma.customers.deleteMany({});
 
@@ -90,6 +92,23 @@ export async function insertTestData() {
         });
     }
 
+    // Loop and add our variants
+    for (const variant of testData.variants) {
+        const product = await prisma.products.findFirst({
+            orderBy: {
+                created_at: 'desc',
+            },
+        });
+        await prisma.variants.create({
+            data: {
+                title: variant.title,
+                values: variant.values,
+                enabled: true,
+                productId: product.id,
+            },
+        });
+    }
+
     // Get data
     data.products = await prisma.products.findMany({
         orderBy: {
@@ -107,6 +126,11 @@ export async function insertTestData() {
         },
     });
     data.customers = await prisma.customers.findMany({
+        orderBy: {
+            created_at: 'desc',
+        },
+    });
+    data.variants = await prisma.variants.findMany({
         orderBy: {
             created_at: 'desc',
         },

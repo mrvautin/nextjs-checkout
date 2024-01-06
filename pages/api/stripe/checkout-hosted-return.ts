@@ -24,7 +24,7 @@ export default async function handler(
     }
 
     // Update our order with the transaction response
-    const order = await updateOrder(session.metadata.orderId, {
+    const order = await updateOrder(session.client_reference_id, {
         transaction_id: session.id,
         status: session.status,
         paid: paidResult,

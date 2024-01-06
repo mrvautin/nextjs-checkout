@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useCart } from 'react-use-cart';
+import { CartContext } from '../context/Cart';
 import { Col, Row, Table } from 'react-bootstrap';
 import { BagCheckFill } from 'react-bootstrap-icons';
 import { BagXFill } from 'react-bootstrap-icons';
 
 const CheckoutResult = () => {
     const router = useRouter();
-    const { emptyCart } = useCart();
+    const { emptyCart } = useContext(CartContext);
     const [order, setOrder] = useState<any>();
 
     useEffect(() => {

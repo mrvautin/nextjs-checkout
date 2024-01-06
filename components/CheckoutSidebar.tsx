@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import CartItems from '../components/CartItems';
-import { useCart } from 'react-use-cart';
+import { CartContext } from '../context/Cart';
 import Link from 'next/link';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Button } from 'react-bootstrap';
@@ -14,12 +14,11 @@ const CheckoutSidebar = () => {
         'cartSidebarState',
         useReadLocalStorage('cartSidebarState'),
     );
+    const { items, emptyCart } = useContext(CartContext);
 
     useEffect(() => {
         setCartState(false);
     }, []);
-
-    const { items, emptyCart } = useCart();
 
     const closeHandler = () => setCartState(!cartState);
     const emptyHandler = () => {

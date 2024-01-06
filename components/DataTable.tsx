@@ -27,6 +27,16 @@ const DataTable = props => {
             }
             return <span className="text-danger">Disabled</span>;
         }
+        if (column.function) {
+            return (
+                <button
+                    className="btn btn-danger"
+                    onClick={() => column.function(value)}
+                >
+                    Delete
+                </button>
+            );
+        }
         if (column.link) {
             return <a href={column.link + value}>{value}</a>;
         }

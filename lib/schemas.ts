@@ -74,6 +74,7 @@ export const schemas = {
             description: { type: 'string', isNotEmpty: true },
             price: { type: 'string', format: 'double' },
             enabled: { type: 'boolean' },
+            variants: { type: 'array' },
         },
         required: [
             'id',

@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../../components/Layout';
-import Cart from '../../../components/Cart';
 import NavAdmin from '../../../components/NavAdmin';
 import Product from '../../../components/ProductAdmin';
 import Spinner from '../../../components/Spinner';
@@ -60,11 +59,9 @@ const ProductPage: NextPage = () => {
 
     return (
         <Layout title="nextjs-checkout | Product">
-            <Cart>
-                <NavAdmin />
-                <h2>Product</h2>
-                <Product product={product} type="edit" />
-            </Cart>
+            <NavAdmin />
+            <h2>Product</h2>
+            <Product product={product} type="edit" />
         </Layout>
     );
 };

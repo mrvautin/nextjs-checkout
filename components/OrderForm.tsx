@@ -34,6 +34,22 @@ const OrderForm = props => {
         );
     };
 
+    const productVariants = item => {
+        const variants = [];
+        for (const variantKey in item.selectedVariants) {
+            const variant = item.selectedVariants[variantKey];
+            variants.push(
+                <p key={'cartItem-' + variantKey}>
+                    {variant.title}: {variant.value}
+                </p>,
+            );
+        }
+        if (variants.length > 0) {
+            return <Row>{variants}</Row>;
+        }
+        return;
+    };
+
     return (
         <Row>
             <Col className="g-3" sm={7} xs={12}>
@@ -142,14 +158,15 @@ const OrderForm = props => {
                                             </span>
                                         </div>
                                     </Row>
+                                    {productVariants(item)}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
                 <Row>
-                    <Col xs={{ span: 10, offset: 1 }}>
-                        <Row>
+                    <Col xs={12}>
+                        <Row className="ms-1 me-1">
                             <Col className="mt-3 text-left" xs={6}>
                                 <h6>Total items:</h6>
                             </Col>

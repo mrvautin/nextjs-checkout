@@ -1,14 +1,14 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import Link from 'next/link';
-import { useCart } from 'react-use-cart';
+import { CartContext } from '../context/Cart';
 import { useLocalStorage } from 'usehooks-ts';
 import { Shop } from 'react-bootstrap-icons';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import Search from './Search';
 
 const Nav = () => {
-    const { totalItems } = useCart();
     const [cartState, setCartState] = useLocalStorage('cartSidebarState', true);
+    const { totalItems } = useContext(CartContext);
 
     const toggleSideCart = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -38,7 +38,7 @@ const Nav = () => {
                             className="badge bg-dark"
                             suppressHydrationWarning
                         >
-                            {totalItems}
+                            {totalItems()}
                         </span>
                     </Button>
                 </Container>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Layout from '../../components/Layout';
-
-import Cart from '../../components/Cart';
 import Navbar from '../../components/Nav';
 import SearchResult from '../../components/SearchResult';
 import CheckoutSidebar from '../../components/CheckoutSidebar';
@@ -10,11 +8,9 @@ import CheckoutSidebar from '../../components/CheckoutSidebar';
 const SearchPage: NextPage = () => {
     return (
         <Layout title="nextjs-checkout | Search">
-            <Cart>
-                <Navbar />
-                <SearchResult />
-                <CheckoutSidebar />
-            </Cart>
+            <Navbar />
+            <SearchResult />
+            <CheckoutSidebar />
         </Layout>
     );
 };

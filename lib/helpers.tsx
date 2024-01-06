@@ -29,12 +29,6 @@ export function removeCurrency(price) {
 }
 
 export function calculateCartTotal(cartTotal, cartMeta) {
-    // Calculate any discounts
-    cartTotal = calculateDiscount(cartTotal, cartMeta);
-    return cartTotal;
-}
-
-export function calculateDiscount(cartTotal, cartMeta) {
     if (cartMeta.discount) {
         if (cartMeta.discount.type === 'amount') {
             cartTotal = cartTotal - cartMeta.discount.value;

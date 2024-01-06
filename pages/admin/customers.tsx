@@ -10,7 +10,6 @@ import {
     InputGroup,
 } from 'react-bootstrap';
 import Layout from '../../components/Layout';
-import Cart from '../../components/Cart';
 import NavAdmin from '../../components/NavAdmin';
 import DataTable from '../../components/DataTable';
 import Spinner from '../../components/Spinner';
@@ -133,80 +132,74 @@ const CustomersPage: NextPage = () => {
 
     return (
         <Layout title="nextjs-checkout | Customers">
-            <Cart>
-                <NavAdmin />
-                <h2>Customers</h2>
-                <Breadcrumb>
-                    <Breadcrumb.Item href="/admin/dashboard">
-                        Home
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item active>Customers</Breadcrumb.Item>
-                </Breadcrumb>
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                        title={searchParameterPlaceholder}
-                        variant="outline-secondary"
-                    >
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('id');
-                                setSearchParameterPlaceholder('Customer ID');
-                            }}
-                        >
-                            Customer ID
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('customerEmail');
-                                setSearchParameterPlaceholder('Customer Email');
-                            }}
-                        >
-                            Customer Email
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setSearchParameter('customerLastName');
-                                setSearchParameterPlaceholder(
-                                    'Customer Surname',
-                                );
-                            }}
-                        >
-                            Customer Surname
-                        </Dropdown.Item>
-                    </DropdownButton>
-                    <Form.Control
-                        aria-label={searchParameterPlaceholder}
-                        onChange={event => {
-                            setSearchTerm(event.target.value);
-                        }}
-                        placeholder={searchParameterPlaceholder}
-                        value={searchTerm}
-                    />
-                    <Button
+            <NavAdmin />
+            <h2>Customers</h2>
+            <Breadcrumb>
+                <Breadcrumb.Item href="/admin/dashboard">Home</Breadcrumb.Item>
+                <Breadcrumb.Item active>Customers</Breadcrumb.Item>
+            </Breadcrumb>
+            <InputGroup className="mb-3">
+                <DropdownButton
+                    title={searchParameterPlaceholder}
+                    variant="outline-secondary"
+                >
+                    <Dropdown.Item
                         onClick={() => {
-                            searchCustomers();
-                        }}
-                        variant="outline-success"
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            getCustomers();
                             setSearchParameter('id');
-                            setSearchTerm('');
+                            setSearchParameterPlaceholder('Customer ID');
                         }}
-                        variant="outline-danger"
                     >
-                        X
-                    </Button>
-                </InputGroup>
-                <DataTable
-                    columns={columns}
-                    data={customers}
-                    datamessage={'No results'}
+                        Customer ID
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('customerEmail');
+                            setSearchParameterPlaceholder('Customer Email');
+                        }}
+                    >
+                        Customer Email
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setSearchParameter('customerLastName');
+                            setSearchParameterPlaceholder('Customer Surname');
+                        }}
+                    >
+                        Customer Surname
+                    </Dropdown.Item>
+                </DropdownButton>
+                <Form.Control
+                    aria-label={searchParameterPlaceholder}
+                    onChange={event => {
+                        setSearchTerm(event.target.value);
+                    }}
+                    placeholder={searchParameterPlaceholder}
+                    value={searchTerm}
                 />
-            </Cart>
+                <Button
+                    onClick={() => {
+                        searchCustomers();
+                    }}
+                    variant="outline-success"
+                >
+                    Filter
+                </Button>
+                <Button
+                    onClick={() => {
+                        getCustomers();
+                        setSearchParameter('id');
+                        setSearchTerm('');
+                    }}
+                    variant="outline-danger"
+                >
+                    X
+                </Button>
+            </InputGroup>
+            <DataTable
+                columns={columns}
+                data={customers}
+                datamessage={'No results'}
+            />
         </Layout>
     );
 };

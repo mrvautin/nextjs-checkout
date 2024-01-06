@@ -229,6 +229,13 @@ const testData = {
             country: 'Australia',
         },
     ],
+    variants: [
+        {
+            title: 'Size',
+            values: 'Small, Medium, Large',
+            enabled: true,
+        },
+    ],
 };
 
 function addDays(date, days) {

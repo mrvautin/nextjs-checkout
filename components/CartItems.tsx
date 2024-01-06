@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from 'react';
-import { useCart } from 'react-use-cart';
+import React, { useContext, useEffect, useState } from 'react';
 import Spinner from '../components/Spinner';
+import { CartContext } from '../context/Cart';
 import { toast } from 'react-toastify';
 import { Button, Col, Form, InputGroup, ListGroup, Row } from 'react-bootstrap';
 import { calculateCartTotal, currency } from '../lib/helpers';
@@ -12,11 +12,16 @@ type Props = {
 
 const CartItems = (props: Props) => {
     const [loading, setLoading] = useState(false);
-    const { items, setCartMetadata, totalItems, metadata, updateItemQuantity } =
-        useCart();
-    let { cartTotal } = useCart();
+    const {
+        cartTotal,
+        items,
+        setMetadata,
+        metadata,
+        totalItems,
+        updateItemQuantity,
+    } = useContext(CartContext);
     const [discount, setDiscount] = useState('');
-    cartTotal = calculateCartTotal(cartTotal, metadata);
+    const checkedCartTotal = calculateCartTotal(cartTotal(), metadata);
 
     useEffect(() => {
         if (metadata.discount && metadata.discount.code) {
@@ -53,8 +58,8 @@ const CartItems = (props: Props) => {
                     });
                     return;
                 }
-                // setDiscount(data);
-                setCartMetadata({
+                setDiscount(data.code);
+                setMetadata({
                     discount: data,
                 });
                 toast('Discount applied', {
@@ -78,7 +83,7 @@ const CartItems = (props: Props) => {
         setDiscount('');
         const cartMeta = metadata;
         delete cartMeta.discount;
-        setCartMetadata(cartMeta);
+        setMetadata(cartMeta);
     }
 
     function cartQuantity(item) {
@@ -93,9 +98,7 @@ const CartItems = (props: Props) => {
         return (
             <InputGroup className="mb-3">
                 <Button
-                    onClick={() =>
-                        updateItemQuantity(item.id, item.quantity - 1)
-                    }
+                    onClick={() => updateItemQuantity(item, 'reduce', 1)}
                     variant="dark"
                 >
                     -
@@ -107,9 +110,7 @@ const CartItems = (props: Props) => {
                     value={item.quantity}
                 />
                 <Button
-                    onClick={() =>
-                        updateItemQuantity(item.id, item.quantity + 1)
-                    }
+                    onClick={() => updateItemQuantity(item, 'add', 1)}
                     variant="dark"
                 >
                     +
@@ -137,15 +138,31 @@ const CartItems = (props: Props) => {
         );
     };
 
+    const productVariants = item => {
+        const variants = [];
+        for (const variantKey in item.selectedVariants) {
+            const variant = item.selectedVariants[variantKey];
+            variants.push(
+                <p key={'cartItem-' + variantKey}>
+                    {variant.title}: {variant.value}
+                </p>,
+            );
+        }
+        if (variants.length > 0) {
+            return <Row>{variants}</Row>;
+        }
+        return;
+    };
+
     return (
         <>
             <Spinner loading={loading} />
             <ListGroup className="pb-4 border-bottom cartItems">
-                {items.map(item => (
+                {items.map((item, index) => (
                     <ListGroup.Item
                         as="li"
                         className="product-card"
-                        key={item.id}
+                        key={'cartItem-' + index}
                     >
                         <Row>
                             <Col xs={4}>{productImage(item)}</Col>
@@ -163,20 +180,21 @@ const CartItems = (props: Props) => {
                                     </Col>
                                 </Row>
                                 <Row>{cartQuantity(item)}</Row>
+                                {productVariants(item)}
                             </Col>
                         </Row>
                     </ListGroup.Item>
                 ))}
             </ListGroup>
             <Row>
-                <Col xs={{ span: 10, offset: 1 }}>
-                    <Row>
+                <Col xs={12}>
+                    <Row className="ms-1 me-1">
                         <Col className="mt-3 text-left" xs={6}>
                             <h6>Total items:</h6>
                         </Col>
                         <Col className="mt-3 text-end" xs={6}>
                             <h6>
-                                <div>{totalItems}</div>
+                                <div>{totalItems()}</div>
                             </h6>
                         </Col>
                         <Col className="mt-3 text-left" xs={6}>
@@ -215,11 +233,19 @@ const CartItems = (props: Props) => {
                                 </button>
                             </div>
                         </Col>
+                        {/* <Col className="mt-3 text-left" xs={6}>
+                            <h6>Discount savings:</h6>
+                        </Col>
+                        <Col className="mt-3 text-end" xs={6}>
+                            <h6>
+                                {currency(cartDiscountValues.cartSavings / 100)}
+                            </h6>
+                        </Col> */}
                         <Col className="mt-3 text-left" xs={6}>
                             <h6>Cart total:</h6>
                         </Col>
                         <Col className="mt-3 text-end" xs={6}>
-                            <h6>{currency(cartTotal / 100)}</h6>
+                            <h6>{currency(checkedCartTotal / 100)}</h6>
                         </Col>
                     </Row>
                 </Col>

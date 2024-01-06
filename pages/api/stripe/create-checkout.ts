@@ -90,9 +90,7 @@ export default async function handler(
             line_items: line_items,
             mode: 'payment',
             customer_email: customer.email,
-            metadata: {
-                orderId: order.id,
-            },
+            client_reference_id: order.id,
             discounts: stripeDiscounts,
             success_url: `${baseUrl}/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${baseUrl}/checkout-result?session_id={CHECKOUT_SESSION_ID}`,

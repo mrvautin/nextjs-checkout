@@ -8,8 +8,10 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import Spinner from './Spinner';
 import ProductImages from './ProductImages';
+import VariantModal from './ModalVariant';
 import { format } from 'date-fns';
 import { NumericFormat } from 'react-number-format';
+import DataTable from '../components/DataTable';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import { removeCurrency } from '../lib/helpers';
@@ -18,6 +20,7 @@ import { Session } from '../lib/types';
 
 const ProductEdit = props => {
     const { push } = useRouter();
+    const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [product, setProduct] = useState(props.product);
 
@@ -129,6 +132,72 @@ const ProductEdit = props => {
                 });
             });
     }
+
+    function deleteVariant(id) {
+        setLoading(true);
+        // fetch
+        fetch('/api/variants/delete', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-id': session.user.id,
+                'x-api-key': session.user.apiKey,
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                // Turn off the spinner
+                setLoading(false);
+
+                // Check for error
+                if (data.error) {
+                    toast(data.error, {
+                        hideProgressBar: false,
+                        autoClose: 2000,
+                        type: 'error',
+                    });
+                    return;
+                }
+
+                toast('Variant deleted', {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'success',
+                });
+                window.location.reload();
+            })
+            .catch(function (err) {
+                // There was an error
+                setLoading(false);
+                toast(err.error, {
+                    hideProgressBar: false,
+                    autoClose: 2000,
+                    type: 'error',
+                });
+            });
+    }
+
+    const columns = [
+        {
+            name: 'id',
+            title: 'Delete',
+            function: id => {
+                deleteVariant(id);
+            },
+        },
+        {
+            name: 'title',
+            title: 'Title',
+        },
+        {
+            name: 'values',
+            title: 'Values',
+        },
+    ];
 
     return (
         <>
@@ -257,6 +326,30 @@ const ProductEdit = props => {
                                         <option value="true">Enabled</option>
                                         <option value="false">Disabled</option>
                                     </select>
+                                </Col>
+                                <Col className="mt-3" xs={12}>
+                                    <Button
+                                        onClick={() => {
+                                            setShowModal(true);
+                                        }}
+                                    >
+                                        New variant
+                                    </Button>
+                                    <VariantModal
+                                        onCancel={() => {
+                                            setShowModal(false);
+                                        }}
+                                        onConfirm={() => {
+                                            setShowModal(false);
+                                        }}
+                                        productId={product.id}
+                                        showmodal={showModal}
+                                    />
+                                    <DataTable
+                                        columns={columns}
+                                        data={product.variants || []}
+                                        datamessage={'No variants'}
+                                    />
                                 </Col>
                                 <ProductImages product={product} />
                             </Row>
