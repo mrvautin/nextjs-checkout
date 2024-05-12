@@ -19,6 +19,10 @@
   "prisma": {
     "seed": "npx ts-node prisma/seed.mjs"
   },
+  "engines" : { 
+    "npm" : ">=9.0.0",
+    "node" : ">=22.0.0"
+  },
   "keywords": [
     "cart",
     "shopping",
